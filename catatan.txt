@@ -1,0 +1,6 @@
+1. daftar user
+ - pilihan instansi
+prangkat daerah ( nama instansi -> balitbang)
+puskesmas/kecamatan ( nama instansi -> balitbang)
+desa 
+masyarakat (gada field)
