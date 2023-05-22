@@ -8,7 +8,7 @@ const encrypt =  async (password) => {
 
 const compare = async (password,hash) => {
     let isValid = false
-     const result = await bcrypt.compare(plaintextPassword, hash);
+     const result = await bcrypt.compare(password, hash);
     return result
 }
 
