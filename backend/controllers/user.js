@@ -1,5 +1,7 @@
 const models = require('../models/index')
 const security =  require('../config/salt')
+const SECRET_KEY = "Kmzway87@@";
+const jwt = require('jsonwebtoken')
 const getAllUser = async (req,res) => {
     try{
 
@@ -27,6 +29,35 @@ const getAllUser = async (req,res) => {
          })
     }
 }
+
+const getUserbytoken = async (req,res) => {
+    const token = req.cookies.token
+    if(!token) {
+        return res.status(401).send({
+            status:'ERROR',
+            message:'Permission Denied'
+        })
+        }
+    
+        try{
+           const data = jwt.verify(token,SECRET_KEY)
+            
+            if(data) {
+              return res.status(200).send(data)
+            }
+            return res.status(401).send({
+                status:'ERROR',
+                message:'Invalid token'
+            })
+        }catch(error) {
+            console.log(error)
+            return res.status(400).send({
+                status:'ERROR',
+                message:'Request not send'
+            })
+        }
+
+}
 const emailCanUse = async(email)=> {
     try {
       const emailinDb = await models.users.findAll({
@@ -46,7 +77,7 @@ const registerUser = async (req,res) => {
     try{
        
         const {fullname,email,password,phone,instansi} = await req.body;
-        const level = 1
+        const level = req.headers.admin?1:0
         let encryptPass = await security.encrypt(password)
         const checkemail = await emailCanUse(email)
         console.log(checkemail)
@@ -65,7 +96,12 @@ const registerUser = async (req,res) => {
                 status: 'OK',
                 message: 'Registrasi Berhasil',
             })
-        } 
+        }  else {
+            res.status(400).send({
+                status: 'ERROR',
+                message: 'Registrasi Gagal',
+            })
+        }
     }catch(err) {
         console.log(err)
         res.status(400).send({
@@ -76,4 +112,4 @@ const registerUser = async (req,res) => {
     }
 }
 
-module.exports = { getAllUser, registerUser}
+module.exports = { getAllUser, registerUser,getUserbytoken}

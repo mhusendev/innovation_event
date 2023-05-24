@@ -92,7 +92,9 @@ export default {
         })
           .then((res) => res.json())
           .then((res) =>{
-            this.$router.push( {name:'dashboard'})
+            if(res.isAdmin) {
+              this.$router.push( {name:'dashboard'})
+            }
           }) 
          
       }
@@ -108,10 +110,12 @@ export default {
             "Content-Type": "application/json",
           },
         })
-          .then((res) => {
-            if(res.status == 200) {
-                this.$router.push( {name:'dashboard'})
+        .then((res) => res.json())
+          .then((res)=> {
+            if(res.status !== 200 || res.isAdmin == false) {
+                this.$router.push( {name:'login'})
             }
+            console.log(res.status)
           }).catch((err)=> {
             
           })

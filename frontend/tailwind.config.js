@@ -7,9 +7,12 @@ export default {
   theme: {
     extend: {
       backgroundImage: theme => ({
-        'hero':"url(@/assets/img/hero.jpg)"
+        'hero':"url(@/assets/img/hero.jpg)",
+        'user':"url(@/assets/img/user.png)"
       })
     },
   },
-  plugins: [],
+  plugins: [
+    require('flowbite/plugin')
+  ],
 }

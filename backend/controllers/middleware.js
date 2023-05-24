@@ -59,7 +59,10 @@ const authorization = async (req,res,next)=> {
 
     try{
        const data = jwt.verify(token,SECRET_KEY)
-        if(data) return next()
+        
+        if(data) {
+          req.admin = data.level
+          return next()}
 
         return res.status(401).send({
             status:'ERROR',

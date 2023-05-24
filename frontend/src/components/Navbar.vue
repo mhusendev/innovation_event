@@ -2,8 +2,12 @@
     <div>
         <nav class="relative px-10 py-5 flex justify-between items-center bg-slate-900">
 	
-            <h1 class="font-bold text-white">Rubikda</h1>
+            <h1 class="font-bold text-white">RUBIKDA</h1>
         
+<!-- <button id="dropdownDefaultButton" data-dropdown-toggle="dropdown" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">Dropdown button <svg class="w-4 h-4 ml-2" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></button> -->
+<!-- Dropdown menu -->
+
+
 		
 		<div class="lg:hidden">
 			<button v-on:click="isShow = true" class="navbar-burger flex items-center text-blue-600 p-3">
@@ -26,24 +30,34 @@
 			<li >
 				
 			</li>
-			<!-- <li><a class="text-sm text-blue-600 font-bold" href="#">Pengumuman Pemenang</a></li>
-			<li class="text-gray-300">
-				<svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" class="w-4 h-4 current-fill" viewBox="0 0 24 24">
-					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v0m0 7v0m0 7v0m0-13a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
-				</svg>
-			</li>
-			<li><a class="text-sm text-white hover:text-gray-500" href="#">Event</a></li>
-
-			<li class="text-gray-300">
-				<svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" class="w-4 h-4 current-fill" viewBox="0 0 24 24">
-					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v0m0 7v0m0 7v0m0-13a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
-				</svg>
-			</li>
-			<li><a class="text-sm text-white hover:text-gray-500" href="#">Contact</a></li>
-		 -->
+		
         </ul>
-		<a class="hidden lg:inline-block lg:ml-auto lg:mr-3 py-2 px-6 bg-gray-50 hover:bg-gray-100 text-sm text-gray-900 font-bold  rounded-xl transition duration-200" href="#">Sign In</a>
-		<a class="hidden lg:inline-block py-2 px-6 bg-blue-500 hover:bg-blue-600 text-sm text-white font-bold rounded-xl transition duration-200" href="#">Sign up</a>
+		<div :class="login?'hidden':'hidden lg:block md:block'">
+			<a class="hidden lg:inline-block lg:ml-auto lg:mr-3 py-2 px-6 bg-gray-50 hover:bg-gray-100 text-sm text-gray-900 font-bold  rounded-xl transition duration-200" href="/login">Sign In</a>
+		    <a class="hidden lg:inline-block py-2 px-6 bg-blue-500 hover:bg-blue-600 text-sm text-white font-bold rounded-xl transition duration-200" href="/register">Sign up</a>
+		</div>
+       <div :class="login?'hidden lg:flex md:lfex':'hidden'" class="flex" >
+		<h1 class="mr-2 bg-white rounded-full px-2 py-2 font-bold text-sm">{{ datauser?.email  }}</h1>
+            <!-- <img src="../assets/img/user.png"  class="w-10 h-10 rounded-full" alt=""> -->
+	         <button id="dropdownDefaultButton" data-dropdown-toggle="dropdown" class="bg-user bg-cover w-10 h-10 rounded-full  focus:ring-4 focus:outline-none  font-medium  text-sm  text-center inline-flex items-center" type="button"></button>
+			<!-- dropdown -->
+			<div id="dropdown" class="z-10 mr-[5%] hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
+				<ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
+				<li>
+					<a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Profile</a>
+				</li>
+				
+				<li>
+					<a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Pengajuan Inovasi</a>
+				</li>
+				<li>
+					<a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Sign out</a>
+				</li>
+				</ul>
+			</div>
+			<!-- dropdown -->
+		</div> 
+
 	</nav>
 	<div class=" relative  transition-transform delay-300 duration-1000 " :class="isShow?'z-50':'z-0 w-0 h-0'">
 		<div :class="isShow?'block':'w-0 h-0'" class="navbar-backdrop fixed inset-0 bg-gray-800 opacity-25"></div>
@@ -68,9 +82,9 @@
 				</ul>
 			</div>
 			<div class="mt-auto" :class="isShow?'block':'hidden'">
-				<div class="pt-6">
-					<a class="block px-4 py-3 mb-3 leading-loose text-xs text-center font-semibold leading-none bg-gray-50 hover:bg-gray-100 rounded-xl" href="#">Sign in</a>
-					<a class="block px-4 py-3 mb-2 leading-loose text-xs text-center text-white font-semibold bg-blue-600 hover:bg-blue-700  rounded-xl" href="#">Sign Up</a>
+				<div class="pt-6" :class="login?'hidden':''">
+					<a class="block px-4 py-3 mb-3 leading-loose text-xs text-center font-semibold leading-none bg-gray-50 hover:bg-gray-100 rounded-xl" href="/login">Sign in</a>
+					<a class="block px-4 py-3 mb-2 leading-loose text-xs text-center text-white font-semibold bg-blue-600 hover:bg-blue-700  rounded-xl" href="/register">Sign Up</a>
 				</div>
 				<p class="my-4 text-xs text-center text-white">
 					<span>Copyright © 2021</span>
@@ -81,11 +95,14 @@
     </div>
 </template>
 <script>
+import { initFlowbite } from 'flowbite'
 export default {
     name:'navbar',
     data() {
         return {
             isShow:false,
+			login:false,
+			datauser:'',
             pages:[
                 { name: 'Home', active:true},
                 { name: 'Pengumuman Pemenang', active:false},
@@ -94,6 +111,39 @@ export default {
             ],
             border:2
         }
+    },
+	mounted: function() {
+           initFlowbite()
+	},
+	created: function() {
+        let baseURL = import.meta.env.VITE_API_URL
+        let endpoint = import.meta.env.VITE_API_MYINFO
+        
+        fetch(baseURL+endpoint, {
+          method: "GET",
+          credentials:'include',
+          headers: {
+            Accept: "application/json, text/plain, */*",
+            "Content-Type": "application/json",
+          },
+        })
+          .then(async (res) => {
+			if(res.status == 200){
+                 let data = await res.json()
+				 console.log(data)
+				 this.datauser = data
+                this.login = true
+            } else {
+                this.login = false
+            }
+		  })
+      
+          .catch((err)=> {
+            this.login = false
+             console.log(err)
+             
+          })
+        
     }
 }
 </script>

@@ -1,6 +1,6 @@
 <template>
     <div class="w-full h-screen overflow-auto">
-        <Navbar />
+        <Navbar/>
         <div class="w-full h-[400px]  bg-no-repeat bg-cover
          bg-center bg-hero bg-fixed ">
                
@@ -19,8 +19,16 @@ export default {
     components: {Navbar},
     data(){
         return{
-            isShow:false
+            isShow:false,
+            userLogin:false,
+            data:{
+                fullname:'',
+                email:'',
+                phone:'',
+                instansi:''
+            }
         }
-    }
+    },
+    
 }
 </script>

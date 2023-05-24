@@ -42,12 +42,14 @@
             "Content-Type": "application/json",
           },
         })
-          .then((res) => {
-            if(res.status !== 200) {
+          .then((res) => res.json())
+          .then((res)=> {
+            if(res.status !== 200 || res.isAdmin == false) {
                 this.$router.push( {name:'login'})
             }
             console.log(res.status)
-          }).catch((err)=> {
+          })
+          .catch((err)=> {
             this.$router.push( {name:'login'})
           })
         
