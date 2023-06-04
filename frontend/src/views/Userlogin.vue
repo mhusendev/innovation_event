@@ -66,6 +66,7 @@ export default {
           method: "POST",
           credentials:'include',
           headers: {
+            'Bypass-Tunnel-Reminder': 'true',
             Accept: "application/json, text/plain, */*",
             "Content-Type": "application/json",
           },

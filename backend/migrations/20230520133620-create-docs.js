@@ -15,6 +15,9 @@ module.exports = {
       url_dokumen: {
         type: Sequelize.STRING
       },
+      jenis_docs: {
+        type: Sequelize.STRING
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

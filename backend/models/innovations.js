@@ -1,39 +1,81 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
-module.exports = (sequelize, DataTypes) => {
-  class innovations extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
-    static associate(models) {
-      // define association here
+const sequelize = require("sequelize");
+const db = require("../config/config");
+var innovations = db.define(
+    "innovations",
+    {   
+        email_user:  {
+            type: sequelize.STRING,
+            allowNull:false,
+          },
+        nama_inovasi:  {
+            type: sequelize.STRING,
+            allowNull:false,
+          },
+        inovator:  {
+            type: sequelize.STRING,
+            allowNull:false,
+          },
+
+        nama_perangkat_daerah:  {
+            type: sequelize.STRING,
+            allowNull:false,
+          },
+        tahapan:  {
+            type: sequelize.STRING,
+            allowNull:false,
+          },
+        inisiator:  {
+            type: sequelize.STRING,
+            allowNull:false,
+          },
+        jenis:  {
+            type: sequelize.STRING,
+            allowNull:false,
+          },
+        bentuk:  {
+            type: sequelize.STRING,
+            allowNull:false,
+          },
+        inovasi_thdp_covid:  {
+            type: sequelize.STRING,
+            allowNull:false,
+          },
+        jenis_urusan_inovasi:  {
+            type: sequelize.STRING,
+            allowNull:false,
+          },
+        tema:  {
+            type: sequelize.STRING,
+            allowNull:false,
+          },
+        tanggal:  {
+            type: sequelize.STRING,
+            allowNull:false,
+          },
+        no_dokumentasi:  {
+            type: sequelize.STRING,
+            allowNull:false,
+          },
+        keterangan:  {
+            type: sequelize.STRING,
+            allowNull:false,
+          },
+        acc:  {
+            type: sequelize.BOOLEAN,
+            allowNull:false,
+          },
+        acc_by: {
+            type: sequelize.STRING,
+            allowNull:false,
+          },
+      },
+    {
+        // freeze name table not using *s on name
+        freezeTableName: false,
+        // dont use createdAt/update
+        timestamps: true,
     }
-  }
-  innovations.init({
-    nama_inovasi: DataTypes.STRING,
-    inovator: DataTypes.STRING,
-    surat: DataTypes.STRING,
-    proposal: DataTypes.STRING,
-    nama_perangkat_daerah: DataTypes.STRING,
-    tahapan: DataTypes.STRING,
-    inisiator: DataTypes.STRING,
-    jenis: DataTypes.STRING,
-    bentuk: DataTypes.STRING,
-    inovasi_thdp_covid: DataTypes.STRING,
-    jenis_urusan_inovasi: DataTypes.STRING,
-    tema: DataTypes.STRING,
-    tanggal: DataTypes.STRING,
-    no_dokumentasi: DataTypes.STRING,
-    keterangan: DataTypes.STRING,
-    acc: DataTypes.BOOLEAN,
-    acc_by: DataTypes.STRING
-  }, {
-    sequelize,
-    modelName: 'innovations',
-  });
-  return innovations;
-};
+);
+module.exports = innovations;
+
+

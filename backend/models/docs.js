@@ -1,24 +1,27 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
-module.exports = (sequelize, DataTypes) => {
-  class docs extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
-    static associate(models) {
-      // define association here
+const sequelize = require("sequelize");
+const db = require("../config/config");
+var docs = db.define(
+    "docs",
+    {
+       no_dokumentasi: {
+          type: sequelize.STRING,
+          allowNull:false,
+        },
+        url_dokumen: {
+            type: sequelize.STRING,
+            allowNull:false,
+          },
+          jenis_docs: {
+            type: sequelize.STRING,
+            allowNull:false,
+          }
+      
+    },
+    {
+        // freeze name table not using *s on name
+        freezeTableName: false,
+        // dont use createdAt/update
+        timestamps: true,
     }
-  }
-  docs.init({
-    no_dokumentasi: DataTypes.STRING,
-    url_dokumen: DataTypes.STRING
-  }, {
-    sequelize,
-    modelName: 'docs',
-  });
-  return docs;
-};
+);
+module.exports = docs;

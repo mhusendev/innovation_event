@@ -9,18 +9,18 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
+      email_user: {
+        allowNull: false,
+     
+        type: Sequelize.STRING
+      },
       nama_inovasi: {
         type: Sequelize.STRING
       },
       inovator: {
         type: Sequelize.STRING
       },
-      surat: {
-        type: Sequelize.STRING
-      },
-      proposal: {
-        type: Sequelize.STRING
-      },
+    
       nama_perangkat_daerah: {
         type: Sequelize.STRING
       },

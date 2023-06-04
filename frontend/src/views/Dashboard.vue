@@ -1,6 +1,6 @@
 
 <template>
-    <div class="flex">
+    <div class="flex bg-white">
        <Sidebar/>
         <div class="w-full">
            <Topbar/>
@@ -37,7 +37,7 @@
         fetch(baseURL+endpoint, {
           method: "GET",
           credentials:'include',
-          headers: {
+           headers: { 'Bypass-Tunnel-Reminder': 'true',
             Accept: "application/json, text/plain, */*",
             "Content-Type": "application/json",
           },

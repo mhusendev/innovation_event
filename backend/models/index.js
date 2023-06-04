@@ -1,43 +1,22 @@
-'use strict';
-
-const fs = require('fs');
-const path = require('path');
-const Sequelize = require('sequelize');
-const process = require('process');
-const basename = path.basename(__filename);
-const env = process.env.NODE_ENV || 'development';
-const config = require(__dirname + '/../config/config.json')[env];
-const db = {};
-
-let sequelize;
-if (config.use_env_variable) {
-  sequelize = new Sequelize(process.env[config.use_env_variable], config);
-} else {
-  sequelize = new Sequelize(config.database, config.username, config.password, config);
-}
-
-fs
-  .readdirSync(__dirname)
-  .filter(file => {
-    return (
-      file.indexOf('.') !== 0 &&
-      file !== basename &&
-      file.slice(-3) === '.js' &&
-      file.indexOf('.test.js') === -1
-    );
-  })
-  .forEach(file => {
-    const model = require(path.join(__dirname, file))(sequelize, Sequelize.DataTypes);
-    db[model.name] = model;
-  });
-
-Object.keys(db).forEach(modelName => {
-  if (db[modelName].associate) {
-    db[modelName].associate(db);
-  }
-});
-
-db.sequelize = sequelize;
-db.Sequelize = Sequelize;
-
-module.exports = db;
+const users = require("./users");
+const innovations = require('./innovations')
+const tahapan_inovasi = require('./tahapanInovasi')
+const inisiator_inovasi = require('./inisiatorInovasi')
+const jenisInovasi = require('./jenis')
+const bentukInovasi = require('./bentukInovasi')
+const inovasiCovid = require('./inovasiCovid')
+const jenisUrusan = require('./jenisUrusan')
+const temaInovasi = require('./temaInovasi')
+const docs = require('./docs')
+const model = {};
+model.users = users;
+model.innovations = innovations
+model.tahapan_inovasi = tahapan_inovasi
+model.inisiator_inovasi = inisiator_inovasi
+model.jenisInovasi = jenisInovasi
+model.bentukInovasi = bentukInovasi
+model.inovasiCovid =inovasiCovid
+model.jenisUrusan = jenisUrusan
+model.temaInovasi = temaInovasi
+model.docs = docs
+module.exports = model;

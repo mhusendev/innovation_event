@@ -50,7 +50,9 @@ const authentication = async (req, res) => {
 
 const authorization = async (req,res,next)=> {
     const token = req.cookies.token
+    // console.log(req.token)
     if(!token) {
+      console.log('gada token')
     return res.status(401).send({
         status:'ERROR',
         message:'Permission Denied'
@@ -61,9 +63,11 @@ const authorization = async (req,res,next)=> {
        const data = jwt.verify(token,SECRET_KEY)
         
         if(data) {
+          console.log(data)
           req.admin = data.level
+          req.email = data.email
+          
           return next()}
-
         return res.status(401).send({
             status:'ERROR',
             message:'Invalid token'
@@ -77,4 +81,7 @@ const authorization = async (req,res,next)=> {
     }
 }
 
-module.exports = { authentication , authorization };
+const logout = async (req,res)=> {
+ res.clearCookie('token').send({message:'berhasil logout'}).end()
+}
+module.exports = { authentication , authorization, logout };

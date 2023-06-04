@@ -84,7 +84,9 @@ export default {
         fetch(baseURL+endpoint, {
           method: "POST",
           credentials:'include',
-          headers: {
+          withCredentials: true,
+           headers: { 'Bypass-Tunnel-Reminder': 'true',
+            
             Accept: "application/json, text/plain, */*",
             "Content-Type": "application/json",
           },
@@ -92,9 +94,10 @@ export default {
         })
           .then((res) => res.json())
           .then((res) =>{
-            if(res.isAdmin) {
+            if(res.data.level) {
               this.$router.push( {name:'dashboard'})
             }
+          
           }) 
          
       }
@@ -105,15 +108,18 @@ export default {
         fetch(baseURL+endpoint, {
           method: "GET",
           credentials:'include',
-          headers: {
+           headers: { 'Bypass-Tunnel-Reminder': 'true',
             Accept: "application/json, text/plain, */*",
             "Content-Type": "application/json",
           },
         })
         .then((res) => res.json())
           .then((res)=> {
-            if(res.status !== 200 || res.isAdmin == false) {
+            // console.log(res)
+            if(res.status !== 200 || !res.isAdmin) {
                 this.$router.push( {name:'login'})
+            }else {
+              this.$router.push({name:'dashboard'})
             }
             console.log(res.status)
           }).catch((err)=> {

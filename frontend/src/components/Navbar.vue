@@ -19,7 +19,7 @@
 		</div>
 		<ul  class="hidden absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 lg:flex lg:mx-auto lg:flex lg:items-center lg:w-auto lg:space-x-6">
 			<li v-for="(page,index) in pages" class="flex"> 
-                <a :class="page.active?'text-blue-600 font-bold':'text-white'" class="text-sm  hover:text-gray-500" href="#">{{page.name}}</a>
+                <a :class="page.active?'text-blue-600 font-bold':'text-white'" class="text-sm  hover:text-gray-500" :href="page.link">{{page.name}}</a>
                  <div class="text-gray-300 mt-1 ml-5" v-if="index < (pages.length-1)">
                     <svg xmlns="http://www.w3.org/2000/svg"  fill="none" stroke="currentColor" class="w-4 h-4 current-fill" viewBox="0 0 24 24">
 					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v0m0 7v0m0 7v0m0-13a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
@@ -44,11 +44,11 @@
 			<div id="dropdown" class="z-10 mr-[5%] hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
 				<ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
 				<li>
-					<a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Profile</a>
+					<a href="#" :class="(title === 'Profile')?'text-blue-600':''" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Profile</a>
 				</li>
 				
 				<li>
-					<a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Pengajuan Inovasi</a>
+					<a href="/pengajuan-inovasi" :class="(title === 'Pengajuan')?'text-blue-600':''" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Pengajuan Inovasi</a>
 				</li>
 				<li>
 					<a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Sign out</a>
@@ -77,7 +77,7 @@
 			<div :class="isShow?'block':'hidden'">
 				<ul v-for="page in pages">
 					<li class="mb-1">
-						<a class="block p-4 text-sm font-semibold text-white hover:bg-blue-50 hover:text-blue-600 rounded" href="#">{{ page.name }}</a>
+						<a class="block p-4 text-sm font-semibold text-white hover:bg-blue-50 hover:text-blue-600 rounded" :href="page.link">{{ page.name }}</a>
 					</li>
 				</ul>
 			</div>
@@ -98,16 +98,17 @@
 import { initFlowbite } from 'flowbite'
 export default {
     name:'navbar',
+	props: ['title'],
     data() {
         return {
             isShow:false,
 			login:false,
 			datauser:'',
             pages:[
-                { name: 'Home', active:true},
-                { name: 'Pengumuman Pemenang', active:false},
-                { name: 'Event', active:false},
-                { name: 'Contact', active:false}
+                { name: 'Home',link:'/', active:(this.title == "Home")?true:false},
+                { name: 'Pengumuman Pemenang',link:'/home', active:(this.title == "Pengumuman")?true:false},
+                { name: 'Event',link:'/home', active:(this.title == "Event")?true:false},
+                { name: 'Contact',link:'/home', active:(this.title == "Contact")?true:false}
             ],
             border:2
         }
@@ -123,6 +124,7 @@ export default {
           method: "GET",
           credentials:'include',
           headers: {
+			'Bypass-Tunnel-Reminder': 'true',
             Accept: "application/json, text/plain, */*",
             "Content-Type": "application/json",
           },
@@ -130,7 +132,7 @@ export default {
           .then(async (res) => {
 			if(res.status == 200){
                  let data = await res.json()
-				 console.log(data)
+				//  console.log(data)
 				 this.datauser = data
                 this.login = true
             } else {

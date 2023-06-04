@@ -1,6 +1,6 @@
 <template>
-    <div class="w-full h-screen overflow-auto">
-        <Navbar/>
+    <div class="w-full h-screen overflow-auto bg-white text-black">
+        <Navbar :title="title"/>
         <div class="w-full h-[400px]  bg-no-repeat bg-cover
          bg-center bg-hero bg-fixed ">
                
@@ -21,6 +21,7 @@ export default {
         return{
             isShow:false,
             userLogin:false,
+            title:'Home',
             data:{
                 fullname:'',
                 email:'',
