@@ -9,7 +9,8 @@ var serveIndex = require('serve-index');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var inovasiRouter = require('./routes/inovasi');
-
+var eventsRouter=  require('./routes/events');
+var bodyParser = require('body-parser');
 var cors = require('cors')
 var app = express();
 
@@ -20,20 +21,30 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
 app.use(logger('dev'));
+
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+
 app.use(cookieParser());
-app.use(function(req, res, next){
-  req.setTimeout(500000, function(){
-      // call back function is called when request timed out.
-  });
-  next();
-});
-app.use(cors({ origin:'https://dark-papayas-pull.loca.lt', credentials: true,  preflightContinue: true, }))
+// var bodyParser = require('body-parser');
+
+
+// // Put these statements before you define any routes.
+// app.use(bodyParser.urlencoded());
+// app.use(bodyParser.json());
+// app.use(function(req, res, next){
+//   req.setTimeout(500000, function(){
+//       // call back function is called when request timed out.
+//   });
+//   next();
+// });
+// app.use(cors())
+ app.use(cors({ origin:['https://a7e0-118-96-87-76.ngrok-free.app','https://innovation052023.pages.dev','http://localhost:3001'], credentials: true,  preflightContinue: true, }))
 // app.use(cors({ origin:true, credentials: true,  preflightContinue: true, }))
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/inovasi',inovasiRouter)
+app.use('/events',eventsRouter)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

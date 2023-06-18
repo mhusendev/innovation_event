@@ -31,7 +31,11 @@ const getAllUser = async (req,res) => {
 }
 
 const getUserbytoken = async (req,res) => {
-    const token = req.cookies.token
+    const authHeader =await req.headers['authorization']?req.headers['authorization'] :''
+   console.log(authHeader)
+    const token_header =await authHeader && authHeader.split(' ')[1]
+      const token = req.cookies.token ? req.cookies.token : token_header
+      console.log(token)
     if(!token) {
         return res.status(401).send({
             status:'ERROR',

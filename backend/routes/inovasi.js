@@ -17,12 +17,14 @@ router.get('/jenis_inovasi',jenisInovasi.getALL);
 router.get('/bentuk_inovasi', bentukInovasi.getALL);
 router.get('/inovasi_covid',inovasiCovid.getALL);
 router.get('/jenis_urusan', jenisUrusan.getALL);
-router.get('/tema',temaInovasi.getALL);
+router.get('/tema',middleware.authorization,temaInovasi.getALL);
+router.get('/get_acc',inovasi.getAll_acc)
 router.post('/acc_inovasi',middleware.authorization,inovasi.accInovasi)
+router.post('/reject_inovasi',middleware.authorization,inovasi.rejectInovasi)
 // multer
 const multer = require('multer');
 const storageEngine = multer.diskStorage({
-    destination: "./file",
+    destination: "./public/files",
     filename: (req, file, cb) => {
       cb(null, `${Date.now()}--${file.originalname}`);
     },
@@ -53,5 +55,5 @@ const storageEngine = multer.diskStorage({
         checkFileType(file, cb);
       },
   });
-router.post("/uploads",middleware.authorization, uploadController.upload)
+router.post("/submitdata", middleware.authorization,upload.array('files'),uploadController.upload)
 module.exports = router;

@@ -26,12 +26,33 @@ const getAll =  async (req,res)=> {
 
 }
 
+const getAll_acc =  async (req,res) => {
+    try{
+        await models.innovations.hasMany(models.docs,{foreignKey:'no_dokumentasi', sourceKey:'no_dokumentasi'})
+        await models.docs.belongsTo(models.innovations,{foreignKey:'no_dokumentasi'})
+        let data = await models.innovations.findAll({
+            include:[{
+                model:models.docs,
+                required:true
+            }],
+            where: {acc:'sudah'},
+            order: [
+                ['id', 'DESC'],
+            ]
+        },
+        )
+    
+        res.send(data)
+    }catch(err){
+        console.log(err)
+    }
+}
 const accInovasi = async (req,res)=> {
 
   try{
     let update = models.innovations.update({
-        acc: 1,
-        acc_by:req.email
+        acc: 'sudah',
+        act_by:req.email
    },
     {
         where: {
@@ -55,6 +76,36 @@ const accInovasi = async (req,res)=> {
     console.log(err)
   }
 }
+const rejectInovasi = async (req,res)=> {
+
+    try{
+      let update = models.innovations.update({
+          acc: 'rejected',
+          act_by:req.email
+     },
+      {
+          where: {
+              id:req.body.id
+          }
+      }
+     )
+  
+     if(update) {
+         res.status(200).send({
+          status: 'OK',
+          message:'Inovasi Berhasil di Update',
+         })
+     } else {
+      res.status(400).send({
+          status: 'ERROR',
+          message:'Inovasi gagal di Update',
+         })
+     }
+    }catch(err){
+      console.log(err)
+    }
+  }
+  
 const create = async (req,res)=> {
 try {
    const {
@@ -71,7 +122,7 @@ try {
     surat,proposal,nama_perangkat_daerah,tahapan,
     inisiator,jenis,bentuk,inovasi_thdp_covid,
     jenis_urusan_inovasi,tema,tanggal,
-    no_dokumentasi,keterangan,acc:false,acc_by:''
+    no_dokumentasi,keterangan,acc:'belum',act_by:''
    })
    if(data) {
     res.status(201).send({
@@ -96,4 +147,4 @@ try {
 
 }
 
-module.exports= {getNo_dokumentasi, create ,getAll, accInovasi}
+module.exports= {getNo_dokumentasi, create ,getAll, accInovasi,getAll_acc,rejectInovasi}

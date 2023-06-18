@@ -74,14 +74,16 @@ export default {
         })
           .then((res) => res.json())
           .then((res) =>{
+            // console.log(res.data)
              if(res.status === "OK") {
+                localStorage.setItem('token',res.data.token)
                 this.message = "Login Berhasil"
                 this.hidden = false
                 this.success = true
                 setTimeout(async()=> {
                     this.hidden =true
                     this.$router.push( {name:'home'})
-                 },5000)
+                 },1500)
 
              } else {
                 this.message = "Login Gagal"
@@ -89,7 +91,7 @@ export default {
                 this.success = false
                 setTimeout(async()=> {
                     this.hidden =true 
-                },5000)
+                },3000)
              }
           }) 
          

@@ -3,9 +3,9 @@
     <Sidebar />
     <div class="w-full">
       <Topbar />
-      <div class="w-full px-[15%] py-[5%]">
-        <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-          <div class="flex items-center justify-between pb-4">
+      <div class="w-full px-[5%] py-[5%]">
+        <div class="relative overflow-x-auto  sm:rounded-lg">
+          <div class="flex items-center justify-between">
             <div>
               <!-- Dropdown menu -->
             </div>
@@ -76,12 +76,17 @@
                   {{ inovasi.inisiator }}
                 </td>
                 <td class="px-6 py-4">
-                  {{ inovasi.acc?'Sudah':'Belum' }}
+                  {{ inovasi.acc }}
                 </td>
                 <td class="px-6 py-4">
                     <div class="flex gap-2">
                       <button class="btn" v-on:click="showDetail(inovasi)">detail</button>
-                      <button class="btn btn-success text-white" v-on:click="accInovasi(inovasi.id)">acc</button>
+                      <button
+                      :class="(inovasi.acc ==='sudah')?'hidden':''" 
+                      class="btn btn-success text-white" v-on:click="accInovasi(inovasi.id)">acc</button>
+                      <button 
+                      :class="(inovasi.acc ==='sudah' || inovasi.acc ==='rejected' )?'hidden':''"
+                       class="btn bg-red-700 text-white" v-on:click="rejectInovasi(inovasi.id)">reject</button>
                     </div>
                 </td>
               </tr>
@@ -153,7 +158,7 @@ export default {
   components: { Topbar, Sidebar },
   data() {
     return {
-      baseURL:'',
+      baseURL:import.meta.env.VITE_API_URL,
       tableInovasi: [],
       warning:false,
       background:'',
@@ -162,13 +167,47 @@ export default {
     };
   },
   methods: {
+    rejectInovasi(id) {
+      let baseURL = import.meta.env.VITE_API_URL;
+      let endpoint = import.meta.env.VITE_POST_REJECT_INOVASI;
+      let token = 'Bearer '+localStorage.getItem('token')
+        fetch(baseURL+endpoint, {
+          method: "POST",
+          credentials:'include',
+          headers: {
+			'Authorization':token,
+            'Bypass-Tunnel-Reminder': 'true',
+            Accept: "application/json, text/plain, */*",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({id:id}),
+        })
+          .then((res) => res.json())
+          .then((res) =>{
+           console.log(res)
+           this.warning = true
+           this.background = 'bg-green-600 text-white '
+          this.alertmessage = 'Berhasil Reject Pengajuan'
+           setTimeout(()=>{
+            this.warning = 'false'
+            this.alertmessage= ''
+            this.background=''
+           },1500)
+           this.getAll();
+            
+          
+          });
+    },
     accInovasi(id) {
       let baseURL = import.meta.env.VITE_API_URL;
       let endpoint = import.meta.env.VITE_POST_ACC_INOVASI;
-      fetch(baseURL+endpoint, {
+      let token = 'Bearer '+localStorage.getItem('token')
+        fetch(baseURL+endpoint, {
           method: "POST",
           credentials:'include',
-           headers: { 'Bypass-Tunnel-Reminder': 'true',
+          headers: {
+			'Authorization':token,
+            'Bypass-Tunnel-Reminder': 'true',
             Accept: "application/json, text/plain, */*",
             "Content-Type": "application/json",
           },
@@ -198,10 +237,13 @@ export default {
     getAll() {
       let baseURL = import.meta.env.VITE_API_URL;
       let endpoint = import.meta.env.VITE_API_GET_INOVASI;
-      fetch(baseURL + endpoint, {
-        method: "GET",
-        credentials: "include",
-         headers: { 'Bypass-Tunnel-Reminder': 'true',
+      let token = 'Bearer '+localStorage.getItem('token')
+		//console.log(token)
+        fetch(baseURL+endpoint, {
+          method: "GET",
+          credentials:'include',
+          headers: {
+           'Bypass-Tunnel-Reminder': 'true',
           Accept: "application/json, text/plain, */*",
           "Content-Type": "application/json",
         },
@@ -218,13 +260,16 @@ export default {
     this.getAll();
   },
   created: function () {
-    this.baseURL = import.meta.env.VITE_API_URL;
+   
     let baseURL = import.meta.env.VITE_API_URL;
     let endpoint = import.meta.env.VITE_API_CEKLOGIN;
-    fetch(baseURL + endpoint, {
-      method: "GET",
-      credentials: "include",
-       headers: { 'Bypass-Tunnel-Reminder': 'true',
+    let token = 'Bearer '+localStorage.getItem('token')
+        fetch(baseURL+endpoint, {
+          method: "GET",
+          credentials:'include',
+          headers: {
+			'Authorization':token,
+      'Bypass-Tunnel-Reminder': 'true',
         Accept: "application/json, text/plain, */*",
         "Content-Type": "application/json",
       },

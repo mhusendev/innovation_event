@@ -24,7 +24,7 @@ const authentication = async (req, res) => {
         }
         // membuat token untuk akses api
         const token = await jwt.sign(data, SECRET_KEY);
-        console.log(token)
+        data.token = token
         // mengirim cookie berisi token
         return res.cookie("token", token, {
             httpOnly: true,
@@ -49,8 +49,11 @@ const authentication = async (req, res) => {
 };
 
 const authorization = async (req,res,next)=> {
-    const token = req.cookies.token
+  const authHeader = req.headers['authorization']?req.headers['authorization'] :''
+  const token_header = authHeader && authHeader.split(' ')[1]
+    const token = req.cookies.token ? req.cookies.token : token_header
     // console.log(req.token)
+    console.log(token)
     if(!token) {
       console.log('gada token')
     return res.status(401).send({
@@ -73,7 +76,7 @@ const authorization = async (req,res,next)=> {
             message:'Invalid token'
         })
     }catch(error) {
-        console.log(err)
+        console.log(error)
         return res.status(400).send({
             status:'ERROR',
             message:'Request not send'

@@ -19,7 +19,7 @@
 		</div>
 		<ul  class="hidden absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 lg:flex lg:mx-auto lg:flex lg:items-center lg:w-auto lg:space-x-6">
 			<li v-for="(page,index) in pages" class="flex"> 
-                <a :class="page.active?'text-blue-600 font-bold':'text-white'" class="text-sm  hover:text-gray-500" :href="page.link">{{page.name}}</a>
+                <router-link :class="page.active?'text-blue-600 font-bold':'text-white'" class="text-sm  hover:text-gray-500" :to="page.link">{{page.name}}</router-link>
                  <div class="text-gray-300 mt-1 ml-5" v-if="index < (pages.length-1)">
                     <svg xmlns="http://www.w3.org/2000/svg"  fill="none" stroke="currentColor" class="w-4 h-4 current-fill" viewBox="0 0 24 24">
 					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v0m0 7v0m0 7v0m0-13a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
@@ -51,7 +51,7 @@
 					<a href="/pengajuan-inovasi" :class="(title === 'Pengajuan')?'text-blue-600':''" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Pengajuan Inovasi</a>
 				</li>
 				<li>
-					<a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Sign out</a>
+					<button v-on:click="logout()" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white w-full text-left">Sign out</button>
 				</li>
 				</ul>
 			</div>
@@ -80,6 +80,20 @@
 						<a class="block p-4 text-sm font-semibold text-white hover:bg-blue-50 hover:text-blue-600 rounded" :href="page.link">{{ page.name }}</a>
 					</li>
 				</ul>
+				<hr :class="login?'block':'hidden'">
+				<ul :class="login?'block':'hidden'">
+					<li class="mb-1">
+						<a class="block p-4 text-sm font-semibold text-white hover:bg-blue-50 hover:text-blue-600 rounded w-full text-center btn">profile</a>
+					</li>
+					<li class="mb-1">
+						<a href="/pengajuan-inovasi" class="block p-4 text-sm font-semibold text-white hover:bg-blue-50 hover:text-blue-600 rounded w-full text-center btn">pengajuan inovasi</a>
+					</li>
+					<li class="mb-1">
+						<button v-on:click="logout()" class="block p-4 text-sm font-semibold text-white hover:bg-blue-50 hover:text-blue-600 rounded w-full btn">sign out</button>
+					</li>
+					
+				</ul>
+
 			</div>
 			<div class="mt-auto" :class="isShow?'block':'hidden'">
 				<div class="pt-6" :class="login?'hidden':''">
@@ -87,7 +101,7 @@
 					<a class="block px-4 py-3 mb-2 leading-loose text-xs text-center text-white font-semibold bg-blue-600 hover:bg-blue-700  rounded-xl" href="/register">Sign Up</a>
 				</div>
 				<p class="my-4 text-xs text-center text-white">
-					<span>Copyright © 2021</span>
+					<span>Copyright © 2023</span>
 				</p>
 			</div>
 		</nav>
@@ -105,25 +119,61 @@ export default {
 			login:false,
 			datauser:'',
             pages:[
-                { name: 'Home',link:'/', active:(this.title == "Home")?true:false},
+                { name: 'Beranda',link:'/', active:(this.title == "Beranda")?true:false},
                 { name: 'Pengumuman Pemenang',link:'/home', active:(this.title == "Pengumuman")?true:false},
-                { name: 'Event',link:'/home', active:(this.title == "Event")?true:false},
-                { name: 'Contact',link:'/home', active:(this.title == "Contact")?true:false}
+                { name: 'Events',link:'/events', active:(this.title == "Events")?true:false},
+                { name: 'Kontak',link:'/home', active:(this.title == "Kontak")?true:false}
             ],
             border:2
         }
     },
+	methods: {
+		logout(){
+			let baseURL = import.meta.env.VITE_API_URL
+        let endpoint = import.meta.env.VITE_API_LOGOUT
+        let token = 'Bearer '+localStorage.getItem('token')
+		console.log(token)
+        fetch(baseURL+endpoint, {
+          method: "GET",
+          credentials:'include',
+          headers: {
+			'Authorization':token,
+			'Bypass-Tunnel-Reminder': 'true',
+            Accept: "application/json, text/plain, */*",
+            "Content-Type": "application/json",
+          },
+        })
+          .then(async (res) => {
+			if(res.status == 200){
+				localStorage.removeItem('token')
+				alert('logout berhasil')
+				window.location.href = '/'
+            } else {
+				alert('logout gagal')
+				this.$router.push( {name:''})
+            }
+		  })
+      
+          .catch((err)=> {
+            this.login = false
+             console.log(err)
+             
+          })
+		}
+	},
 	mounted: function() {
            initFlowbite()
 	},
 	created: function() {
         let baseURL = import.meta.env.VITE_API_URL
         let endpoint = import.meta.env.VITE_API_MYINFO
-        
+        let token = 'Bearer '+localStorage.getItem('token')
+		console.log(token)
         fetch(baseURL+endpoint, {
           method: "GET",
           credentials:'include',
           headers: {
+			'Authorization':token,
 			'Bypass-Tunnel-Reminder': 'true',
             Accept: "application/json, text/plain, */*",
             "Content-Type": "application/json",

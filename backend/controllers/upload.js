@@ -2,7 +2,7 @@ const { v4: uuidv4 } = require('uuid');
 const models = require('../models')
 
 const upload = async (req,res)=> {
-    //  console.log(req.files)
+
    try{
     // console.log(req.body)
     let exe = []
@@ -37,7 +37,7 @@ const upload = async (req,res)=> {
         res.send({status:'fail'})
     } else {
  
-           const data = await models.innovations.create({
+           const data =  models.innovations.create({
             email_user:req.email,
             nama_inovasi,inovator,
             nama_perangkat_daerah,tahapan,
@@ -61,7 +61,7 @@ const upload = async (req,res)=> {
     }
      
    }catch(err) {
-    // console.log(err)
+    console.log(err)
    } 
 }
 

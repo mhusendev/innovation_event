@@ -61,12 +61,12 @@ var innovations = db.define(
             allowNull:false,
           },
         acc:  {
-            type: sequelize.BOOLEAN,
-            allowNull:false,
-          },
-        acc_by: {
             type: sequelize.STRING,
             allowNull:false,
+          },
+        act_by: {
+            type: sequelize.STRING,
+            allowNull:true,
           },
       },
     {

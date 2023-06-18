@@ -73,7 +73,8 @@
    </div> 
     <div class="w-full mt-5">
         <p class="mb-2">Deskripsi Inovasi</p>
-        <textarea class="w-full" v-model="keterangan"></textarea>
+        <QuillEditor  contentType="html" theme="snow" v-model:content="keterangan"/>
+        
     </div>
 
             <!-- endform -->
@@ -90,7 +91,7 @@
     </select>
            <div class="w-full flex">
             <button v-on:click="addFile()" class="px-3 py-2 bg-green-800 text-white rounded">Add</button>
-            <button v-on:click="save()" class="w-full ml-3 px-3 py-2 bg-slate-800 text-white rounded">Save</button>
+            <button v-on:click="save()" class="w-full ml-3 px-3 py-2 bg-slate-800 text-white rounded">{{ savebtn }}</button>
            </div>
         </div>
         <p class="mb-5 mt-10 border-b w-fit border-black pb-3">List Dokumentasi Upload</p>
@@ -101,9 +102,7 @@
                 <th scope="col" class="px-6 py-3">
                 No
                 </th>
-                <th scope="col" class="px-6 py-3">
-                    url
-                </th>
+            
                 <th scope="col" class="px-6 py-3">
                     jenis dokumen
                 </th>
@@ -116,9 +115,7 @@
                 <td scope="col" class="px-6 py-3">
                     {{ index+1 }}
                 </td>
-                <td scope="col" class="px-6 py-3">
-                    {{ file.data.name }}
-                </td>
+           
                 <td scope="col" class="px-6 py-3">
                     {{ file.jenis_docs}}
                 </td>
@@ -138,14 +135,17 @@
 </template>
 <script>
 import Navbar from '../components/Navbar.vue';
+import { QuillEditor } from '@vueup/vue-quill'
+import '@vueup/vue-quill/dist/vue-quill.snow.css';
 export default {
     name:'pengajuan',
-    components: {Navbar},
+    components: {Navbar,QuillEditor},
     data() {
         return {
             file:'',
             filetemp:[],
             inovator: '',
+            savebtn: 'Save',
             selectedTahapan_inovasi:'--pilih--',
             selectedInisiator:'--pilih--',
             selectedJenisinovasi:'--pilih--',
@@ -182,9 +182,10 @@ export default {
         }
     },
     methods: {
-        save(){
-            const formData = new FormData();
-             let data = {
+       async save(){
+         
+             try{
+              let data = await {
                nama_inovasi:this.nama_inovasi,
                inovator: this.inovator,
                nama_perangkat_daerah: this.nama_perangkat_daerah,
@@ -195,41 +196,45 @@ export default {
                inovasi_thdp_covid: this.selectedInovasiCovid,
                jenis_urusan:this.selectedJenisUrusan,
                tema: this.selectedTemaInovasi,
-               tanggal: new Date(),
+               tanggal: new Date().getDay()+"/"+new Date().getMonth()+"/"+new Date().getFullYear(),
                keterangan: this.keterangan
              }
-             formData.append('nama_inovasi',this.nama_inovasi)
-             formData.append('inovator',this.inovator)
-             formData.append('nama_perangkat_daerah',this.nama_perangkat_daerah)
-             formData.append('tahapan',this.selectedTahapan_inovasi)
-             formData.append('inisiator',this.selectedInisiator)
-             formData.append('jenis',this.selectedJenisinovasi)
-             formData.append('bentuk',this.selectedBentukinovasi)
-             formData.append('inovasi_thdp_covid',this.selectedInovasiCovid)
-             formData.append('jenis_urusan_inovasi',this.selectedJenisUrusan)
-             formData.append('tema',this.selectedTemaInovasi)
-             formData.append('tanggal',new Date())
-             formData.append('keterangan', this.keterangan)
+                    console.log(data)
+                    let datatosend = new FormData();
+                    datatosend.append("nama_inovasi",data.nama_inovasi)
+                    datatosend.append('inovator',data.inovator)
+                    datatosend.append('nama_perangkat_daerah',data.nama_perangkat_daerah)
+                    datatosend.append('tahapan',data.tahapan)
+                    datatosend.append('inisiator',data.inisiator)
+                    datatosend.append('jenis',data.jenis)
+                    datatosend.append('bentuk',data.bentuk)
+                    datatosend.append('inovasi_thdp_covid',data.inovasi_thdp_covid)
+                    datatosend.append('jenis_urusan_inovasi',data.jenis_urusan)
+                    datatosend.append('tema',data.tema)
+                    datatosend.append('tanggal',data.tanggal)
+                    datatosend.append('keterangan', data.keterangan)
 
             for(let i in this.filetemp) {
-                formData.append('files',this.filetemp[i].data)
-                formData.append('jenisfile',this.filetemp[i].jenis_docs)
-                formData.append('namafile',this.filetemp[i].data.name)
+                datatosend.append('files',this.filetemp[i].data)
+                datatosend.append('jenisfile',this.filetemp[i].jenis_docs)
+                datatosend.append('namafile',this.filetemp[i].data.name)
             }
             let baseURL = import.meta.env.VITE_API_URL
            let endpoint = import.meta.env.VITE_POST_UPLOAD_INOVASI
-            fetch(baseURL+endpoint,{
-                method: 'POST',
-                credentials:'include',
-                keepalive: true,
-                headers: {
-                  'Bypass-Tunnel-Reminder': 'true',
-                  "Content-Type": "multipart/form-data",
-                },
-                body: formData
+           let token = 'Bearer '+localStorage.getItem('token')
+           console.log(await datatosend)
+           this.savebtn = 'Submitting...'
+        fetch(baseURL+endpoint, {
+          method:"POST",
+          headers:{
+               'Authorization':token
+          },
+          body: datatosend,
             }).then(res => res.json())
             .then((res)=>{
+                this.savebtn = 'Save'
                 if(res.status === "OK")  {
+
                   alert('Submit Berhasil')
                   window.location.href = "/pengajuan-inovasi"
                 } else {
@@ -239,6 +244,10 @@ export default {
               alert('submit gagal')
               console.log(err)
             })
+             }catch(err){
+
+              console.log(err)
+             }
         },
         async addFile(){
          
@@ -256,10 +265,12 @@ export default {
         gettemainovasi(){
             let baseURL = import.meta.env.VITE_API_URL
         let endpoint = import.meta.env.VITE_API_GET_TEMAINOVASI
+        let token = 'Bearer '+localStorage.getItem('token')
         fetch(baseURL+endpoint, {
           method: "GET",
           credentials:'include',
-            headers: {  
+          headers: {
+			'Authorization':token,  
             'Bypass-Tunnel-Reminder': 'true',
             Accept: "application/json, text/plain, */*",
             "Content-Type": "application/json",
@@ -279,10 +290,13 @@ export default {
         getjenisurusan(){
             let baseURL = import.meta.env.VITE_API_URL
         let endpoint = import.meta.env.VITE_API_GET_JENISURUSAN
+        let token = 'Bearer '+localStorage.getItem('token')
         fetch(baseURL+endpoint, {
           method: "GET",
           credentials:'include',
-           headers: { 'Bypass-Tunnel-Reminder': 'true',
+          headers: {
+			'Authorization':token,
+             'Bypass-Tunnel-Reminder': 'true',
             Accept: "application/json, text/plain, */*",
             "Content-Type": "application/json",
           },
@@ -301,10 +315,13 @@ export default {
         getinovasicovid(){
             let baseURL = import.meta.env.VITE_API_URL
         let endpoint = import.meta.env.VITE_API_GET_INOVASICOVID
+        let token = 'Bearer '+localStorage.getItem('token')
         fetch(baseURL+endpoint, {
           method: "GET",
           credentials:'include',
-           headers: { 'Bypass-Tunnel-Reminder': 'true',
+          headers: {
+			'Authorization':token,
+             'Bypass-Tunnel-Reminder': 'true',
             Accept: "application/json, text/plain, */*",
             "Content-Type": "application/json",
           },
@@ -323,10 +340,13 @@ export default {
         getbentukinovasi(){
             let baseURL = import.meta.env.VITE_API_URL
         let endpoint = import.meta.env.VITE_API_GET_BENTUKINOVASI
+        let token = 'Bearer '+localStorage.getItem('token')
         fetch(baseURL+endpoint, {
           method: "GET",
           credentials:'include',
-           headers: { 'Bypass-Tunnel-Reminder': 'true',
+          headers: {
+			'Authorization':token,
+            'Bypass-Tunnel-Reminder': 'true',
             Accept: "application/json, text/plain, */*",
             "Content-Type": "application/json",
           },
@@ -345,10 +365,13 @@ export default {
         getjenisinovasi(){
             let baseURL = import.meta.env.VITE_API_URL
         let endpoint = import.meta.env.VITE_API_GET_JENISINOVASI
+        let token = 'Bearer '+localStorage.getItem('token')
         fetch(baseURL+endpoint, {
           method: "GET",
           credentials:'include',
-           headers: { 'Bypass-Tunnel-Reminder': 'true',
+          headers: {
+			'Authorization':token, 
+            'Bypass-Tunnel-Reminder': 'true',
             Accept: "application/json, text/plain, */*",
             "Content-Type": "application/json",
           },
@@ -367,10 +390,13 @@ export default {
         getinisiator(){
             let baseURL = import.meta.env.VITE_API_URL
         let endpoint = import.meta.env.VITE_API_GET_INISIATOR
+        let token = 'Bearer '+localStorage.getItem('token')
         fetch(baseURL+endpoint, {
           method: "GET",
           credentials:'include',
-           headers: { 'Bypass-Tunnel-Reminder': 'true',
+          headers: {
+			'Authorization':token,
+             'Bypass-Tunnel-Reminder': 'true',
             Accept: "application/json, text/plain, */*",
             "Content-Type": "application/json",
           },
@@ -389,10 +415,13 @@ export default {
         getTahapan(){
             let baseURL = import.meta.env.VITE_API_URL
         let endpoint = import.meta.env.VITE_API_GET_TAHAPAN
+        let token = 'Bearer '+localStorage.getItem('token')
         fetch(baseURL+endpoint, {
           method: "GET",
           credentials:'include',
-           headers: { 'Bypass-Tunnel-Reminder': 'true',
+          headers: {
+			'Authorization':token,
+             'Bypass-Tunnel-Reminder': 'true',
             Accept: "application/json, text/plain, */*",
             "Content-Type": "application/json",
           },

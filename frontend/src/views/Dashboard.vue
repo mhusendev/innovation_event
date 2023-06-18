@@ -34,10 +34,13 @@
        created:  function() {
         let baseURL = import.meta.env.VITE_API_URL
         let endpoint = import.meta.env.VITE_API_CEKLOGIN
+        let token = 'Bearer '+localStorage.getItem('token')
         fetch(baseURL+endpoint, {
           method: "GET",
           credentials:'include',
-           headers: { 'Bypass-Tunnel-Reminder': 'true',
+          headers: {
+			'Authorization':token, 
+            'Bypass-Tunnel-Reminder': 'true',
             Accept: "application/json, text/plain, */*",
             "Content-Type": "application/json",
           },

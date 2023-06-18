@@ -95,6 +95,7 @@ export default {
           .then((res) => res.json())
           .then((res) =>{
             if(res.data.level) {
+              localStorage.setItem('token',res.data.token)
               this.$router.push( {name:'dashboard'})
             }
           
