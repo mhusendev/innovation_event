@@ -4,7 +4,10 @@ const create = async (req,res)=> {
 
    console.log(req.file.path) 
 try{
-let customtanggal = new Date().getDay+"/"+new Date().getMonth()+"/"+new Date().getFullYear()    
+const month = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+const d = new Date();
+let name = month[d.getMonth()];
+let customtanggal = new Date().getDate()+" "+name+" "+new Date().getFullYear()    
 let posterURl = req.file?req.file.path.replace(/\\/g, "/").replace("public/",""):''
 const {judul,deskripsi,start,end} = req.body
 const data = await models.events.create({judul,tanggal:customtanggal,deskripsi,start,end,poster:posterURl,create_by:req.email?req.email:''})

@@ -17,4 +17,69 @@ try{
 
 }
 
-module.exports = { getALL}
+const create =async (req,res)=> {
+  try{
+    const {nama}= req.body
+     let post = await models.inovasiCovid.create({nama})
+     if(post){
+      res.status(201).send({
+        status:'OK',
+        message:'Success'
+      })
+     } else {
+      res.status(400).send({
+        status:'ERROR',
+        message:'Failed'
+      })
+     }
+
+  }catch(err){
+    res.status(400).send({
+      status:'ERROR',
+      message:'Failed'
+    })
+    console.log(err)
+  }
+}
+
+const update = async(req,res)=> {
+  try{
+    const {id,nama} = req.body
+
+    let change = await models.inovasiCovid.update({nama},{where: {id:id}})
+   if(change){
+    res.status(201).send({
+      status:'OK',
+      message:'Success'
+    })
+   }else {
+    res.status(400).send({
+      status:'ERR',
+      message:'Failed'
+    })
+   }
+  }catch(err){
+    console.log(err)
+  }
+}
+
+const destroy = async(req,res)=> {
+  try{
+    const {id} = req.body
+    let deleteData = await models.inovasiCovid.destroy({id})
+    if(deleteData){
+      res.status(200).send({
+        status:'OK',
+        message:'Success'
+      })
+    }else {
+      res.status(400).send({
+        status:'ERR',
+        message:'Failed'
+      })
+    }
+  }catch(err){
+    console.log(err)
+  }
+}
+module.exports = { getALL , create, update, destroy}
