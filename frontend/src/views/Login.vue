@@ -24,7 +24,7 @@
                 </div>
                 <input
                   v-model="email"
-                  class="text-slate-500 w-full text-lg py-2 border-b border-gray-300 focus:outline-none focus:border-blue-500"
+                  class="text-slate-500 rounded-xl  mt-2 w-full text-lg py-2 border-b border-gray-300 focus:outline-none focus:border-blue-500"
                   type="email"
                   placeholder="mike@gmail.com"
                 />
@@ -38,7 +38,7 @@
                 </div>
                 <input
                   v-model="password"
-                  class="text-slate-500 w-full text-lg py-2 border-b border-gray-300 focus:outline-none focus:border-blue-500"
+                  class="text-slate-500 rounded-xl mt-2 w-full text-lg py-2 border-b border-gray-300 focus:outline-none focus:border-blue-500"
                   type="password"
                   placeholder="Enter your password"
                 />

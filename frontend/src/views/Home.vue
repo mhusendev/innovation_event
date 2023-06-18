@@ -53,7 +53,7 @@
                         </div>
                     </div>
                     <h3 class="border-b border-black w-fit mt-2 mb-2 text-sm">Deskripsi</h3>
-                    <p class="text-sm">{{ data.keterangan }}</p>
+                    <p class="text-sm" v-html="data.keterangan"></p>
                     <div class="w-full flex overflow-auto mt-5">
                         <div  v-for="d in data.docs" >
                           <a 

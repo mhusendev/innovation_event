@@ -72,10 +72,10 @@
                       <div class="flex gap-2">
                         <button class="btn" v-on:click="showDetail(event)">detail</button>
                         <button
-                        
+                        v-on:click="showModaledit(event)"
                         class="btn btn-warning text-white" >update</button>
                         <button 
-            
+                        v-on:click="showModaldelete(event)"
                          class="btn bg-red-700 text-white" >delete</button>
                       </div>
                   </td>
@@ -169,6 +169,24 @@
     </div>
   </form>
 </dialog>
+<!-- modal delete -->
+<!-- Open the modal using ID.showModal() method -->
+
+<dialog id="my_modal_5" class="modal">
+  <form method="dialog" class="modal-box bg-white">
+    <div class="alert bg-red-600 text-white">
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-info shrink-0 w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+  <span>Hapus Event ?</span>
+  <div class="flex gap-2">
+    <button class="btn btn-sm">Tidak</button>
+    <button v-on:click="deleteEvent()" class="btn btn-sm btn-primary">Ya</button>
+  </div>
+</div>
+  </form>
+  <form method="dialog" class="modal-backdrop">
+    <button>close</button>
+  </form>
+</dialog>
       </div>
     </div>
   </template>
@@ -197,6 +215,7 @@ import '@vueup/vue-quill/dist/vue-quill.snow.css';
         modalTitle:'',
         datamodal:[],
         model_event:{
+            id:'',
             judul:'',
             poster:'',
             start:'',
@@ -206,11 +225,62 @@ import '@vueup/vue-quill/dist/vue-quill.snow.css';
       };
     },
     methods: {
+        deleteEvent(){
+            let baseURL = import.meta.env.VITE_API_URL
+           let endpoint = import.meta.env.VITE_API_DELETE_EVENTS
+           let token = 'Bearer '+localStorage.getItem('token')
+          
+        
+        fetch(baseURL+endpoint, {
+          method:"POST",
+          headers: {
+            'Authorization':token,
+            'Accept': "application/json, text/plain, */*",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({id:this.model_event.id}),
+            }).then(res => res.json())
+            .then((res)=>{
+                if(res.status === "OK")  {
+                  this.message.title ='success'
+                  this.message.text ='Berhasil Hapus Event'
+                  this.getAll()
+                  my_modal_5.close()
+                  this.setModelDefault()
+                  this.messageModal()
+                } else {
+                    this.message.title ='failed'
+                  this.message.text ='Gagal Hapus Event'
+                  my_modal_5.close()
+                  this.messageModal()
+                }
+            }).catch((err)=> {
+                this.message.title ='failed!'
+                  this.message.text ='Gagal Hapus Event'
+                  my_modal_5.close()
+                  this.setModelDefault()
+                  this.messageModal()
+              console.log(err)
+            })
+        },
+        showModaldelete(data) {
+            this.model_event.id = data.id
+            my_modal_5.showModal()
+        }, 
+        showModaledit(data){
+        this.modalTitle = 'Edit'
+         this.model_event.judul = data.judul
+         this.model_event.start = data.start
+         this.model_event.end = data.end
+         this.model_event.deskripsi = data.deskripsi
+         this.model_event.id = data.id
+         my_modal_3.showModal()
+        },
         messageModal(){
             my_modal_4.showModal()
         },
         save(){
-            console.log(this.model_event)
+           if(this.modalTitle === 'Create') { 
             let baseURL = import.meta.env.VITE_API_URL
            let endpoint = import.meta.env.VITE_API_POST_EVENTS
            let token = 'Bearer '+localStorage.getItem('token')
@@ -232,6 +302,8 @@ import '@vueup/vue-quill/dist/vue-quill.snow.css';
                 if(res.status === "OK")  {
                   this.message.title ='success'
                   this.message.text ='Berhasil Memposting Event'
+                  this.getAll()
+                  my_modal_3.close()
                   this.setModelDefault()
                   this.messageModal()
                 } else {
@@ -245,6 +317,50 @@ import '@vueup/vue-quill/dist/vue-quill.snow.css';
                   this.messageModal()
               console.log(err)
             })
+        } else {
+            let baseURL = import.meta.env.VITE_API_URL
+           let endpoint = import.meta.env.VITE_API_PUT_EVENTS
+           let token = 'Bearer '+localStorage.getItem('token')
+           let datatosend = new FormData();
+           if(this.model_event.poster) {
+            datatosend.append('file', this.model_event.poster)
+           }    
+           datatosend.append('id',this.model_event.id)
+           datatosend.append('judul',this.model_event.judul)
+          
+           datatosend.append('start', this.model_event.start)
+           datatosend.append('end', this.model_event.end)
+           datatosend.append('deskripsi', this.model_event.deskripsi)
+
+        fetch(baseURL+endpoint, {
+          method:"PUT",
+          headers:{
+               'Authorization':token
+          },
+          body: datatosend,
+            }).then(res => res.json())
+            .then((res)=>{
+                if(res.status === "OK")  {
+                  this.message.title ='success'
+                  this.message.text ='Berhasil Update Event'
+                  this.setModelDefault()
+                  this.getAll()
+                  my_modal_3.close()
+                  this.messageModal()
+                  
+                } else {
+                    this.message.title ='failed'
+                  this.message.text ='Gagal Update Event'
+                  this.messageModal()
+                }
+            }).catch((err)=> {
+                this.message.title ='failed!'
+                  this.message.text ='Gagal Update Event'
+                  this.messageModal()
+              console.log(err)
+            })
+
+        }
         },
         setModelDefault(){
             this.model_event.judul = '';
@@ -252,6 +368,7 @@ import '@vueup/vue-quill/dist/vue-quill.snow.css';
         this.model_event.start = '';
         this.model_event.end = '';
         this.model_event.deskripsi ='';
+        this.model_event.id ='';
       
         },
         previewFiles(event) {
@@ -261,7 +378,7 @@ import '@vueup/vue-quill/dist/vue-quill.snow.css';
       async createEventModal() {
         this.modalTitle = 'Create'
          await this.setModelDefault()
-        my_modal_3.showModal()
+         my_modal_3.showModal()
       },
       showDetail(modaldata){
           // console.log(modaldata)

@@ -61,15 +61,31 @@ const getall = async(req,res)=> {
 
 const update = async(req,res) => {
     try{
-        const {judul,tanggal,deskripsi,poster} = req.body
-        let update =await models.innovations.update({
-            judul,tanggal,deskripsi,poster,edited_by:req.email
-        },
+        let update;
+       
+        if(req.file){
+            let posterURl = req.file.path.replace(/\\/g, "/").replace("public/","")
+            const {id,judul,deskripsi,start,end} = req.body
+         update =await models.events.update({
+        judul,deskripsi,poster:posterURl,edited_by:req.email,
+        start,end},
         {
             where: {
-                id:req.body.id
+                id:id
             },
         })
+        } else {
+           console.log(req.body)
+           const {id,judul,deskripsi,start,end} = req.body
+            update =await models.events.update({
+            judul,deskripsi,edited_by:req.email,
+            start,end},
+            {
+                where: {
+                    id:id
+                },
+            })
+        	}
 
         if(update){
             res.status(200).send({
@@ -83,9 +99,34 @@ const update = async(req,res) => {
             })
         }
     }catch(err){
-        
+        console.log(err)
     }
 
 }
 
-module.exports ={create,getall,update}
+const hapus = async (req,res)=> {
+    const {id} = req.body
+  //  console.log(req.body)
+    try{
+       let deleteData = await models.events.destroy({
+            where: {
+                id:id
+            }
+        })
+        if(deleteData){
+            res.status(200).send({
+                status:'OK',
+                message:'data berhasil dihapus'
+            })
+        }else {
+            res.status(400).send({
+                status:'ERROR',
+                message:'data gagal dihapus'
+            })
+        }
+    }catch(err){
+        console.log(err)
+    }
+}
+
+module.exports ={create,getall,update,hapus}

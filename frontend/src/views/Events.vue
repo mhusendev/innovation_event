@@ -3,13 +3,15 @@
         <Navbar :title="title"/>
       
           
-     
+    <div class="flex justify-center items-center">
+        <h1 class="mt-10 border-b-2 border-black pb-2 text-xl font-bold">EVENTS</h1>
+    </div>
         <div class="w-full max-h-[900px] px-10 py-5 overflow-y-auto" id="events"  >
             
             <div v-for="(data,index) in events" class="w-full h-fit bg-white px-5 py-3 shadow-xl rounded-xl my-5">
                 <div class="w-full md:flex block py-3">
                    <img :src="url_foto+data.poster"
-                   class="md:w-[30%] w-[100%] object-cover" alt="">
+                   class="md:w-[30%] w-[100%] object-cover md:object-contain" alt="">
                    <div class="w-full md:px-5 mt-2 md:mt-0 ">
                     <h1 class="font-bold text-xl border-b border-black pb-3">{{ data.judul }}</h1>
                    

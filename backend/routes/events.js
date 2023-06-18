@@ -40,4 +40,6 @@ const storageEngine = multer.diskStorage({
       },
   });
 router.post("/create",middleware.authorization,upload.single('file'),events.create);
+router.put("/update",middleware.authorization,upload.single('file'),events.update);
+router.post("/hapus",middleware.authorization,events.hapus);
 module.exports = router;
