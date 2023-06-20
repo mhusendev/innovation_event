@@ -196,7 +196,7 @@ export default {
                inovasi_thdp_covid: this.selectedInovasiCovid,
                jenis_urusan:this.selectedJenisUrusan,
                tema: this.selectedTemaInovasi,
-               tanggal: new Date().getDay()+"/"+new Date().getMonth()+"/"+new Date().getFullYear(),
+               tanggal: new Date().getDate()+"/"+new Date().getMonth()+"/"+new Date().getFullYear(),
                keterangan: this.keterangan
              }
                     console.log(data)

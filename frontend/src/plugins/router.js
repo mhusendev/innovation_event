@@ -11,6 +11,7 @@ const routes =  [
     {path:'/admin/dashboard',name:'dashboard',component:()=> import('@/views/Dashboard.vue')},
     {path:'/admin/inovasi',name:'admininovasi',component:()=> import('@/views/AdminInovasi.vue')},
     {path:'/admin/event',name:'adminevent',component:()=> import('@/views/AdminEvent.vue')},
+    {path:'/admin/pemenang',name:'adminwinners',component:()=> import('@/views/AdminWinners.vue')},
 ]
 
 const router = createRouter({
