@@ -14,8 +14,13 @@
             
             <div v-for="data in inovasi" class="w-full bg-white px-5 py-3 shadow-xl rounded-xl my-5">
                 <div class="w-full md:flex block py-3">
-                   <img :src="url_foto+data.docs.filter(a =>  a.    jenis_docs == 'foto cover')[0].url_dokumen"
-                   class="md:w-[30%] w-[100%] object-cover" alt="">
+                  <div v-for="f in data.docs">
+                    <img 
+                    v-if="(f.jenis_docs === 'foto cover')"
+                   :src="url_foto+f.url_dokumen"
+                   class="w-[100%] object-cover" alt="">
+                </div>
+                
                    <div class="w-full md:px-5 mt-2 md:mt-0 ">
                     <h1 class="font-bold text-xl border-b border-black pb-3">{{ data.nama_inovasi }}</h1>
                     <div class="grid grid-cols-1 md:grid-cols-2 border-b border-black pb-2">
