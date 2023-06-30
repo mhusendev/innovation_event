@@ -20,7 +20,7 @@ try{
 const create =async (req,res)=> {
   try{
     const {nama}= req.body
-     let post = await models.bentukInovasi.create({nama})
+     let post = await models.bentukInovasi.create({nama:nama})
      if(post){
       res.status(201).send({
         status:'OK',
@@ -46,7 +46,7 @@ const update = async(req,res)=> {
   try{
     const {id,nama} = req.body
 
-    let change = await models.bentukInovasi.update({nama},{where: {id:id}})
+    let change = await models.bentukInovasi.update({nama:nama},{where: {id:id}})
    if(change){
     res.status(201).send({
       status:'OK',
@@ -66,7 +66,7 @@ const update = async(req,res)=> {
 const destroy = async(req,res)=> {
   try{
     const {id} = req.body
-    let deleteData = await models.bentukInovasi.destroy({id})
+    let deleteData = await models.bentukInovasi.destroy({id:id})
     if(deleteData){
       res.status(200).send({
         status:'OK',

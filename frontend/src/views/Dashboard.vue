@@ -3,7 +3,7 @@
     <div class="flex bg-white">
        <Sidebar/>
         <div class="w-full">
-           <Topbar/>
+           <Topbar :toptitle="toptitle"/>
            <div class="w-full px-[15%] py-[5%]">
             <h1 class="w-full p-10 text-center mt-[10%] font-bold text-2xl shadow-xl rounded-2xl text-gray-500" >Selamat datang di System Ruang Publik Inovasi Daerah</h1>
            </div>
@@ -23,7 +23,9 @@
        name:'dashboard',
        components: { Topbar, Sidebar },
        data(){
-        return {}
+        return {
+          toptitle:'Dashboard'
+        }
        },
        methods: {
         

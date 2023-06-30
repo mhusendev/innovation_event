@@ -1,8 +1,8 @@
 <template>
     <div>
-        <nav class="relative px-10 py-5 flex justify-between items-center bg-slate-900">
+        <nav class="relative px-10 py-1 flex justify-between items-center bg-slate-900">
 	
-            <h1 class="font-bold text-white">RUBIKDA</h1>
+			<img src="../assets/img/logo2.png" class="w-[10%] "/>
         
 <!-- <button id="dropdownDefaultButton" data-dropdown-toggle="dropdown" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">Dropdown button <svg class="w-4 h-4 ml-2" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></button> -->
 <!-- Dropdown menu -->
@@ -44,7 +44,7 @@
 			<div id="dropdown" class="z-10 mr-[5%] hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
 				<ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
 				<li>
-					<a href="#" :class="(title === 'Profile')?'text-blue-600':''" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Profile</a>
+					<button v-on:click="showProfile()" :class="(title === 'Profile')?'text-blue-600':''" class="w-full text-left block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Profile</button>
 				</li>
 				<li>
 					<a href="/pengajuan-inovasi" :class="(title === 'Pengajuan')?'text-blue-600':''" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Inovasi ku</a>
@@ -85,7 +85,7 @@
 				<hr :class="login?'block':'hidden'">
 				<ul :class="login?'block':'hidden'">
 					<li class="mb-1">
-						<a class="block p-4 text-sm font-semibold text-white hover:bg-blue-50 hover:text-blue-600 rounded w-full text-center btn">profile</a>
+						<button v-on:click="showProfile()" class="block p-4 text-sm font-semibold text-white hover:bg-blue-50 hover:text-blue-600 rounded w-full text-center btn">profile</button>
 					</li>
 					<li class="mb-1">
 						<a href="/pengajuan-inovasi" class="block p-4 text-sm font-semibold text-white hover:bg-blue-50 hover:text-blue-600 rounded w-full text-center btn">pengajuan inovasi</a>
@@ -107,6 +107,34 @@
 				</p>
 			</div>
 		</nav>
+		<!-- modal -->
+		<dialog id="modal_profile" class="modal">
+  <form method="dialog" class="modal-box" >
+    <h3 class="font-bold text-lg text-center uppercase border-b">Profile</h3>
+      <table>
+		<tr>
+			<td>Nama</td>
+			<td> &nbsp;&nbsp;: {{ datauser.fullname }}</td>
+		</tr>
+		<tr>
+			<td >Email</td>
+			<td> &nbsp;&nbsp;: {{ datauser.email }}</td>
+		</tr>
+		<tr>
+			<td >No Hp</td>
+			<td>&nbsp; : {{ datauser.phone }}</td>
+		</tr>
+		<tr>
+			<td >Instansi</td>
+			<td>&nbsp; : {{ datauser.instansi }}</td>
+		</tr>
+	  </table>
+    <div class="modal-action">
+      <!-- if there is a button in form, it will close the modal -->
+      <button class="btn w-full bg-slate-600 text-white">Close</button>
+    </div>
+  </form>
+</dialog>
 	</div>
     </div>
 </template>
@@ -122,14 +150,17 @@ export default {
 			datauser:'',
             pages:[
                 { name: 'Beranda',link:'/', active:(this.title == "Beranda")?true:false},
-                { name: 'Pengumuman Pemenang',link:'/home', active:(this.title == "Pengumuman")?true:false},
+                { name: 'Pengumuman Pemenang',link:'/pemenang', active:(this.title == "Pemenang")?true:false},
                 { name: 'Events',link:'/events', active:(this.title == "Events")?true:false},
-                { name: 'Kontak',link:'/home', active:(this.title == "Kontak")?true:false}
+                { name: 'Kontak',link:'/kontak', active:(this.title == "Kontak")?true:false}
             ],
             border:2
         }
     },
 	methods: {
+		showProfile(){
+			modal_profile.showModal()
+		},
 		logout(){
 			let baseURL = import.meta.env.VITE_API_URL
         let endpoint = import.meta.env.VITE_API_LOGOUT

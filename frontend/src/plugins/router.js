@@ -3,6 +3,9 @@ import { createRouter, createWebHistory } from "vue-router";
 const routes =  [
     {path:'/',name:'home',component:()=> import('@/views/Home.vue')},
     {path:'/events',name:'events',component:()=> import('@/views/Events.vue')},
+    {path:'/pemenang',name:'winners',component:()=> import('@/views/Winners.vue')},
+    {path:'/kontak',name:'contact',component:()=> import('@/views/Contact.vue')},
+    {path:'/forgot',name:'forgotpassword',component:()=> import('@/views/forgotPass.vue')},
 
     {path:'/pengajuan-inovasi',name:'pengajuan',component:()=> import('@/views/Pengajuan.vue')},
     {path:'/login',name:'userlogin',component:()=> import('@/views/Userlogin.vue')},

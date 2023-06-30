@@ -57,7 +57,7 @@ var innovations = db.define(
             allowNull:false,
           },
         keterangan:  {
-            type: sequelize.STRING,
+            type: sequelize.TEXT,
             allowNull:false,
           },
         acc:  {

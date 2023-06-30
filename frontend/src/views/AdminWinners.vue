@@ -2,14 +2,14 @@
     <div class="flex bg-white">
       <Sidebar />
       <div class="w-full">
-        <Topbar />
+        <Topbar :toptitle="toptitle"/>
         <div class="w-full px-[5%] py-[5%]">
           <div class="relative overflow-x-auto  sm:rounded-lg">
             <div class="flex items-center justify-between">
               <div>
                 <button v-on:click="showModalAdd()" class="btn btn-success text-white">Beri Nilai</button>
               </div>
-              <label for="table-search" class="sr-only">Search</label>
+              <label for="table-search" class="sr-only">Cari</label>
               <div class="relative">
                 <div
                   class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none"
@@ -32,7 +32,7 @@
                   type="text"
                   id="table-search"
                   class="block p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  placeholder="Search for items"
+                  placeholder="Pencarian"
                 />
               </div>
             </div>
@@ -46,36 +46,43 @@
                 class="text-xs sticky top-0 text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
               >
                 <tr>
-                  <th scope="col" class="px-6 py-3">Poster</th>
-                  <th scope="col" class="px-6 py-3">Judul Event</th>
+                  <th scope="col" class="px-6 py-3">Nama</th>
+                  <th scope="col" class="px-6 py-3">Perangkat Daerah</th>
                  
-                  <th scope="col" class="px-6 py-3">Action</th>
+                  <th scope="col" class="px-6 py-3">Tanggal</th>
+                  <th scope="col" class="px-6 py-3">Nilai</th>
+                  <th scope="col" class="px-6 py-3">Opsi</th>
                 </tr>
               </thead>
               <tbody>
                 <tr
-                  v-for="event in tableWinners"
+                  v-for="winners in tableWinners"
                   class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
                 >
                   <td
                     scope="row"
-                    class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                    class="px-6 py-4"
                   >
-                    <img :src="baseURL+'/'+event.poster" alt="" class="w-36">
+                   {{ winners.nama_inovasi }}
                   </td>
   
                   <td class="px-6 py-4">
-                    {{ event.judul }}
+                    {{ winners.nm_perangkat_daerah }}
+                  </td>
+                  <td class="px-6 py-4">
+                    {{ winners.tanggal_inovasi }}
+                  </td>
+                  <td class="px-6 py-4">
+                    {{ winners.nilai }}
                   </td>
               
                   <td class="px-6 py-4">
                       <div class="flex gap-2">
-                        <button class="btn" v-on:click="showDetail(event)">detail</button>
                         <button
-                        v-on:click="showModaledit(event)"
+                        v-on:click="showModaledit(winners)"
                         class="btn btn-warning text-white" >update</button>
                         <button 
-                        v-on:click="showModaldelete(event)"
+                        v-on:click="showModaldelete(winners)"
                          class="btn bg-red-700 text-white" >delete</button>
                       </div>
                   </td>
@@ -85,66 +92,26 @@
           </div>
         </div>
         <!-- modal detail-->
-<dialog id="my_modal_2" class="modal">
-    <div class="modal-box">
-      <h3 class="font-bold pb-2 text-center">Detail Event</h3>
-      <h3 class="font-light text-xs border-b  pb-2 text-center">{{ datamodal.tanggal }}</h3>
-      <div class="w-full">
-          <div class="flex gap-4 mt-3"> 
-              <p class="w-[37%]">Judul Event</p>
-              <p>:  {{ datamodal.judul }}</p>
-          </div>
-          <div class="flex gap-4"> 
-              <p class="w-[37%]">mulai event </p>
-              <p>:  {{ datamodal.start }}</p>
-          </div>
-          <div class="flex gap-4"> 
-              <p class="w-[37%]">akhir event </p>
-              <p>:  {{ datamodal.end }}</p>
-          </div>
-          <div class="flex gap-4"> 
-              <p class="w-[37%]">di post oleh</p>
-              <p>:  {{ datamodal.create_by }}</p>
-          </div>
-          <div class="flex gap-4"> 
-              <p class="w-[37%]">dipost pada </p>
-              <p>:  {{ datamodal.tanggal }}</p>
-          </div>
-     
-          <div class="mt-5"> 
-              <p class="w-fit border-b pb-1 pr-3">Deskripsi </p>
-              <p v-html="datamodal.deskripsi"></p>
-          </div>
-          
-          <div class="w-full h-fit overflow-y-scroll">
-           <div class="w-full flex" >
-              <a v-for="(im,index) in datamodal.docs" :href="baseURL+'/'+im.url_dokumen" target="_blank" class="btn mt-2 mr-2" >{{ im.jenis_docs }}</a>
-           </div>
-          </div>
-          
-  
-          
-      </div>
-    </div>
-    <form method="dialog" class="modal-backdrop">
-      <button>close</button>
-    </form>
-</dialog>
+
 <!-- modal create/update -->
 <dialog id="my_modal_3" class="modal">
     <div class="modal-box bg-white text-black">
       <h3 class="font-bold pb-2 text-center">{{modalTitle}}</h3>
       <h3 class="font-light text-xs border-b  pb-2 text-center"></h3>
       <div class="w-full">
-        <select class="w-full" v-model="selectedInovasi" v-on:change="setSelectedInovasi()">
+        <select class="w-full" v-model="selectedInovasi" v-on:change="setSelectedInovasi()" v-if="modalTitle !== 'Edit'">
         <option value="--pilih--">--pilih inovasi--</option>
         <option v-for=" inovasi in listInovasi"  :value="inovasi">{{ inovasi.nama_inovasi }}</option>
     </select>
+    <input type="text" class="w-full" readonly v-model="modelWinners.nama_inovasi" v-else>
     <p class="mt-5 mb-2">Perangkat Daerah</p>
     <input type="text" class="w-full" readonly v-model="modelWinners.nm_perangkat_daerah">
     <p class="mt-5 mb-2">Tanggal Inovasi</p>
     <input type="text" class="w-full" readonly v-model="modelWinners.tanggal_inovasi">
-        <button v-on:click="save()" class="btn w-full bg-green-600 mt-5 hover:bg-green-300">Save</button> 
+    <p class="mt-5 mb-2">Nilai</p>
+    <input type="text" class="w-full"  v-model="modelWinners.nilai">
+        <button v-on:click="save()" class="btn w-full bg-green-600 mt-5 hover:bg-green-300" v-if="modalTitle !== 'Edit'">Save</button> 
+        <button v-on:click="update()" class="btn w-full bg-blue-600 mt-5 hover:bg-green-300" v-else>Update Nilai</button> 
     </div>
     </div>
     <form method="dialog" class="modal-backdrop">
@@ -155,7 +122,7 @@
 <dialog id="my_modal_4" class="modal bg-white">
   <form method="dialog" class="modal-box" :class="(message.title === 'success')?'bg-green-600':'bg-red-600'">
     <h3 class="font-bold text-lg text-center uppercase">{{ message.title }}</h3>
-    <p class="py-4 text-center">Press ESC key or click the button below to close</p>
+    <p class="py-4 text-center">{{ message.text }}</p>
     <div class="modal-action">
       <!-- if there is a button in form, it will close the modal -->
       <button class="btn w-full bg-slate-600 text-white">Close</button>
@@ -172,7 +139,7 @@
   <span>Hapus Event ?</span>
   <div class="flex gap-2">
     <button class="btn btn-sm">Tidak</button>
-    <button v-on:click="deleteEvent()" class="btn btn-sm btn-primary">Ya</button>
+    <button v-on:click="deleteData()" class="btn btn-sm btn-primary">Ya</button>
   </div>
 </div>
   </form>
@@ -196,6 +163,7 @@ import '@vueup/vue-quill/dist/vue-quill.snow.css';
     components: { Topbar, Sidebar, QuillEditor },
     data() {
       return {
+        toptitle:'Pemenang',
         baseURL:import.meta.env.VITE_API_URL,
         tableWinners: [],
         listInovasi:[],
@@ -210,6 +178,7 @@ import '@vueup/vue-quill/dist/vue-quill.snow.css';
         modalTitle:'',
         datamodal:[],
         modelWinners:{
+             id:'',
             nama_inovasi:'',
             nm_perangkat_daerah:'',
             nilai:'',
@@ -224,12 +193,10 @@ import '@vueup/vue-quill/dist/vue-quill.snow.css';
             this.modelWinners.nm_perangkat_daerah = this.selectedInovasi.nama_perangkat_daerah
             this.modelWinners.tanggal_inovasi = this.selectedInovasi.tanggal
         },
-        deleteEvent(){
+        deleteData(){
             let baseURL = import.meta.env.VITE_API_URL
-           let endpoint = import.meta.env.VITE_API_DELETE_EVENTS
+           let endpoint = import.meta.env.VITE_API_DELETE_WINNERS
            let token = 'Bearer '+localStorage.getItem('token')
-          
-        
         fetch(baseURL+endpoint, {
           method:"POST",
           headers: {
@@ -237,19 +204,19 @@ import '@vueup/vue-quill/dist/vue-quill.snow.css';
             'Accept': "application/json, text/plain, */*",
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({id:this.model_winners.id}),
+          body: JSON.stringify({id:this.modelWinners.id}),
             }).then(res => res.json())
             .then((res)=>{
                 if(res.status === "OK")  {
                   this.message.title ='success'
-                  this.message.text ='Berhasil Hapus Event'
+                  this.message.text ='Berhasil Dihapus'
                   this.getAll()
                   my_modal_5.close()
                   this.setModelDefault()
                   this.messageModal()
                 } else {
                     this.message.title ='failed'
-                  this.message.text ='Gagal Hapus Event'
+                  this.message.text ='Gagal Dihapus'
                   my_modal_5.close()
                   this.messageModal()
                 }
@@ -263,28 +230,94 @@ import '@vueup/vue-quill/dist/vue-quill.snow.css';
             })
         },
         showModaldelete(data) {
-            this.model_winners.id = data.id
+            this.modelWinners.id = data.id
             my_modal_5.showModal()
         }, 
         showModaledit(data){
         this.modalTitle = 'Edit'
-         this.model_winners.judul = data.judul
-         this.model_winners.start = data.start
-         this.model_winners.end = data.end
-         this.model_winners.deskripsi = data.deskripsi
-         this.model_winners.id = data.id
+         this.modelWinners.id = data.id
+         this.modelWinners.nama_inovasi = data.nama_inovasi
+         this.modelWinners.nm_perangkat_daerah = data.nm_perangkat_daerah
+         this.modelWinners.tanggal_inovasi = data.tanggal_inovasi 
+         this.modelWinners.nilai = data.nilai
          my_modal_3.showModal()
         },
         messageModal(){
             my_modal_4.showModal()
         },
+        update() {
+          let baseURL = import.meta.env.VITE_API_URL
+        let endpoint = import.meta.env.VITE_API_PUT_WINNERS
+        fetch(baseURL+endpoint, {
+          method: "PUT",
+          credentials:'include',
+          withCredentials: true,
+           headers: {
+            Accept: "application/json, text/plain, */*",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(this.modelWinners),
+        })
+          .then((res) => res.json())
+          .then((res) =>{
+            if(res.status === "OK")  {
+                  this.message.title ='success'
+                  this.message.text = res.message
+                  this.getAll()
+                  my_modal_3.close()
+                  this.setModelDefault()
+                  this.messageModal()
+                } else {
+                    this.message.title ='failed'
+                  this.message.text =res.message
+                  this.messageModal()
+                }
+          
+          }) 
+         
+      
+        },
         save(){
-          console.log(this.selectedInovasi)
+       this.modelWinners.nama_inovasi = this.selectedInovasi.nama_inovasi
+        console.log(this.modelWinners)
+        let baseURL = import.meta.env.VITE_API_URL
+        let endpoint = import.meta.env.VITE_API_POST_WINNERS
+        fetch(baseURL+endpoint, {
+          method: "POST",
+          credentials:'include',
+          withCredentials: true,
+           headers: {
+            Accept: "application/json, text/plain, */*",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(this.modelWinners),
+        })
+          .then((res) => res.json())
+          .then((res) =>{
+            if(res.status === "OK")  {
+                  this.message.title ='success'
+                  this.message.text = res.message
+                  this.getAll()
+                  my_modal_3.close()
+                  this.setModelDefault()
+                  this.messageModal()
+                } else {
+                    this.message.title ='failed'
+                  this.message.text =res.message
+                  this.messageModal()
+                }
+          
+          }) 
+         
+      
         
         },
         setModelDefault(){
 
-      
+       this.modelWinners.nama_inovasi =''
+       this.modelWinners.nilai = ''
+       this.modelWinners.nm_perangkat_daerah =''
+       this.modelWinners.tanggal_inovasi =''
         },
  
       async showModalAdd() {
@@ -299,7 +332,7 @@ import '@vueup/vue-quill/dist/vue-quill.snow.css';
       },
       getAll() {
         let baseURL = import.meta.env.VITE_API_URL;
-        let endpoint = import.meta.env.VITE_API_GET_EVENTS;
+        let endpoint = import.meta.env.VITE_API_GET_WINNERS;
         let token = 'Bearer '+localStorage.getItem('token')
           //console.log(token)
           fetch(baseURL+endpoint, {

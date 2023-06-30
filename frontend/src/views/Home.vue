@@ -1,7 +1,7 @@
 <template>
     <div class="w-full h-screen overflow-auto bg-white text-black" style="scroll-behavior: smooth;">
         <Navbar :title="title"/>
-        <div class="w-full md:h-[490px] lg:h-[490px] h-[620px]  bg-no-repeat bg-cover
+        <div class="w-full md:h-[475px] lg:h-[475px] h-[620px]  bg-no-repeat bg-cover
          bg-center bg-hero bg-fixed ">
                
                 <h1 class=" h-full w-full text-center md:text-5xl lg:text-5xl text-2xl font-bold text-white md:pt-[15%] pt-[50%] lg:pt-[15%] py-3 bg-opacity-50 bg-fixed bg-slate-900 m-0">RUANG PUBLIK INOVASI DAERAH</h1>
@@ -14,16 +14,16 @@
             
             <div v-for="data in inovasi" class="w-full bg-white px-5 py-3 shadow-xl rounded-xl my-5">
                 <div class="w-full md:flex block py-3">
-                  <div v-for="f in data.docs">
+                  <div v-for="f in data.docs" class="w-fit">
                     <img 
                     v-if="(f.jenis_docs === 'foto cover')"
                    :src="url_foto+f.url_dokumen"
-                   class="w-[100%] object-cover" alt="">
+                   class="w-[90%] object-cover" alt="">
                 </div>
                 
-                   <div class="w-full md:px-5 mt-2 md:mt-0 ">
+                   <div class="w-full h-fit md:ml-5  mt-2 md:mt-0 ">
                     <h1 class="font-bold text-xl border-b border-black pb-3">{{ data.nama_inovasi }}</h1>
-                    <div class="grid grid-cols-1 md:grid-cols-2 border-b border-black pb-2">
+                    <div class="grid grid-cols-1 md:grid-cols-2 mt-[2%]">
                         <div class="flex ">
                             <div class="w-full md:w-[50%] text-xs">Inovator</div>
                             <div class="w-full text-xs">: {{ data.inovator }}</div>
@@ -57,8 +57,8 @@
                             <div class="w-full text-xs pl-1 "> {{ data.bentuk }}</div>
                         </div>
                     </div>
-                    <h3 class="border-b border-black w-fit mt-2 mb-2 text-sm">Deskripsi</h3>
-                    <p class="text-sm" v-html="data.keterangan"></p>
+                    <h3 class="border-b border-black w-fit mt-[2%] mb-2 text-sm">Deskripsi</h3>
+                    <p class="text-sm  max-h-40 overflow-y-auto p-1" v-html="data.keterangan"></p>
                     <div class="w-full flex overflow-auto mt-5">
                         <div  v-for="d in data.docs" >
                           <a 

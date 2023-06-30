@@ -11,6 +11,7 @@ var usersRouter = require('./routes/users');
 var inovasiRouter = require('./routes/inovasi');
 var eventsRouter=  require('./routes/events');
 var winnersRouter = require('./routes/winners')
+var contactRouter = require('./routes/contact')
 var bodyParser = require('body-parser');
 var cors = require('cors')
 var app = express();
@@ -47,6 +48,7 @@ app.use('/users', usersRouter);
 app.use('/inovasi',inovasiRouter)
 app.use('/events',eventsRouter)
 app.use('/winners',winnersRouter)
+app.use('/contact',contactRouter)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

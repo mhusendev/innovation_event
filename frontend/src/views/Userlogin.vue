@@ -35,7 +35,9 @@
                   placeholder="Enter your password"
                 />
                 <button v-on:click="handleLoginUser()" class="w-full hover:bg-blue-800 hover:text-yellow-400 rounded-full bg-blue-600 px-5 py-3 mt-12 text-white font-bold">Login</button>
-                </div>
+                
+            </div>
+            <router-link class="ml-[5%] text-blue-700" to="/forgot">Lupa Password</router-link>     
             </div>
         </div>
     </div>

@@ -2,7 +2,7 @@
   <div class="flex bg-white">
     <Sidebar />
     <div class="w-full">
-      <Topbar />
+      <Topbar :toptitle="toptitle"/>
       <div class="w-full px-[5%] py-[5%]">
         <div class="relative overflow-x-auto  sm:rounded-lg">
           <div class="flex items-center justify-between">
@@ -32,7 +32,9 @@
                 type="text"
                 id="table-search"
                 class="block p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="Search for items"
+                placeholder="Pencarian"
+                v-model="search"
+                v-on:change="Cari()"
               />
             </div>
           </div>
@@ -158,15 +160,39 @@ export default {
   components: { Topbar, Sidebar },
   data() {
     return {
+      toptitle:'Inovasi',
       baseURL:import.meta.env.VITE_API_URL,
       tableInovasi: [],
       warning:false,
       background:'',
       alertmessage:'',
-      datamodal:[]
+      datamodal:[],
+      search:'',
     };
   },
   methods: {
+    async Cari(){
+         if(this.search) {
+          let filter =  this.tableInovasi.filter((el)=> {
+            if(el.nama_inovasi === this.search) {
+              return el.nama_inovasi === this.search
+            } else if (el.acc === this.search ) {
+              return el.acc === this.search
+            }
+            else if (el.inisiator === this.search ) {
+              return el.inisiator === this.search
+            }
+            else if (el.inovator === this.search ) {
+              return el.inovator === this.search
+            }
+            
+          })
+         this.tableInovasi = filter
+         } else {
+          this.getAll()
+         }
+
+    },
     rejectInovasi(id) {
       let baseURL = import.meta.env.VITE_API_URL;
       let endpoint = import.meta.env.VITE_POST_REJECT_INOVASI;

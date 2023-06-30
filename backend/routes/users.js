@@ -9,6 +9,8 @@ router.get('/myinfo', userController.getUserbytoken);
 router.post('/register',userController.registerUser)
 router.post('/login',middleware.authentication)
 router.get('/logout',middleware.logout)
+router.get('/',userController.verifyLink);
+router.post('/forgotpassword',userController.sendMailVerify)
 router.get('/isloggedin',middleware.authorization,(req,res)=> {
     console.log(req.admin)
     res.status(200).send({ status:200,isAdmin:req.admin })
