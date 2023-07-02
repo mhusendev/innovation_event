@@ -1,6 +1,7 @@
 const models = require('../models/index')
 const { v4: uuidv4 } = require('uuid');
-
+const SECRET_KEY = "Kmzway87@@";
+const jwt = require('jsonwebtoken')
 const getNo_dokumentasi = async(req,res)=> {
    let no_dokumentasi= await uuidv4()
    if(no_dokumentasi) return res.status(200).send({no_doc:no_dokumentasi})
@@ -146,5 +147,42 @@ try {
 }
 
 }
+const getToken = async (req)=> {    
+    const authHeader =await req.headers['authorization']?req.headers['authorization'] :''
 
-module.exports= {getNo_dokumentasi, create ,getAll, accInovasi,getAll_acc,rejectInovasi}
+    const token_header =await authHeader && authHeader.split(' ')[1]
+      const token = req.cookies.token ? req.cookies.token : token_header
+     
+    if(!token) {
+        return false
+        } else {
+            return token
+        }
+}
+
+const getByuser = async (req,res)=> {
+    let token = await getToken(req)
+   if(!token) return res.sendStatus(404)
+
+    try{
+        let datauser = jwt.verify(token,SECRET_KEY)   
+        await models.innovations.hasMany(models.docs,{foreignKey:'no_dokumentasi', sourceKey:'no_dokumentasi'})
+        await models.docs.belongsTo(models.innovations,{foreignKey:'no_dokumentasi'})
+        let data = await models.innovations.findAll({
+            include:[{
+                model:models.docs,
+                required:true
+            }],
+            where: {email_user:datauser.email},
+            order: [
+                ['id', 'DESC'],
+            ]
+        },
+        )
+        res.send(data)
+
+    }catch(err){
+      console.log(err)
+    }
+}
+module.exports= {getNo_dokumentasi, create ,getAll, accInovasi,getAll_acc,rejectInovasi,getByuser}

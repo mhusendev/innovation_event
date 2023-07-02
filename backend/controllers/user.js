@@ -36,10 +36,9 @@ const getAllUser = async (req,res) => {
 
 const getUserbytoken = async (req,res) => {
     const authHeader =await req.headers['authorization']?req.headers['authorization'] :''
-   console.log(authHeader)
+
     const token_header =await authHeader && authHeader.split(' ')[1]
       const token = req.cookies.token ? req.cookies.token : token_header
-      console.log(token)
     if(!token) {
         return res.status(401).send({
             status:'ERROR',
@@ -49,7 +48,7 @@ const getUserbytoken = async (req,res) => {
     
         try{
            const data = jwt.verify(token,SECRET_KEY)
-            
+         
             if(data) {
               return res.status(200).send(data)
             }
@@ -89,13 +88,13 @@ const updatePassword = async(req,res) => {
         let change = await models.users.update({password:encryptPass},{where: {email:mailsave}})
         if(change){
             mailsave =''
-         res.status(201).send({
+         res.status(200).send({
            status:'OK',
            message:'Success'
          })
         } else {
             mailsave =''
-         res.status(400).send({
+         res.status(200).send({
            status:'ERR',
            message:'Failed'
          })
@@ -104,19 +103,22 @@ const updatePassword = async(req,res) => {
     }catch(err){
         console.log(err)
         mailsave =''
-        res.status(400).send({
+        res.status(200).send({
             status:'ERR',
             message:'Failed'
           })
 
     }
 }
-const verifyLink =async (req,res,next) => {
+const verifyLink =async (req,res) => {
   try{
     if(req.query.t == stringvalid){
-        res.send(stringvalid)
+        res.render('new')
+        setTimeout(()=>{
+            stringvalid =''
+        },100000)
     }else {
-        res.send("Halaman Tidak ditemukan....")
+        res.render('index')
     }
   }catch(err){
     console.log(err)
@@ -169,7 +171,7 @@ const registerUser = async (req,res) => {
             message: 'Email sudah terdaftar',
             data: {}
         })
-        console.log(encryptPass)
+
         const users = await models.users.create({
             fullname,email,password: encryptPass,phone,instansi,level
         })
@@ -214,5 +216,6 @@ module.exports = {
     registerUser,
     getUserbytoken,
     sendMailVerify,
-    verifyLink
+    verifyLink,
+    updatePassword
 }

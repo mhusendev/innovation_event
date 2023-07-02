@@ -98,7 +98,7 @@
       </div>
       <!-- modal -->
       <dialog id="my_modal_2" class="modal">
-  <div class="modal-box">
+  <div class="modal-box w-11/12 max-w-5xl">
     <h3 class="font-bold pb-2 text-center">Detail Pengajuan</h3>
     <h3 class="font-light text-xs border-b  pb-2 text-center">{{ datamodal.tanggal }}</h3>
     <div class="w-full">
@@ -111,7 +111,7 @@
             <p>:  {{ datamodal.tahapan }}</p>
         </div>
         <div class="flex gap-4"> 
-            <p class="w-[37%]">bentuk inovasi </p>
+            <p class="w-[41%]">bentuk inovasi </p>
             <p>:  {{ datamodal.bentuk }}</p>
         </div>
         <div class="flex gap-4"> 
@@ -129,7 +129,7 @@
    
         <div class="mt-5"> 
             <p class="w-fit border-b pb-1 pr-3">keterangan </p>
-            <p>{{ datamodal.keterangan }}</p>
+            <p v-html="datamodal.keterangan" class="h-60 overflow-y-auto"></p>
         </div>
         
         <div class="w-full h-fit overflow-y-scroll">

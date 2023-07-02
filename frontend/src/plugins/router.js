@@ -6,7 +6,7 @@ const routes =  [
     {path:'/pemenang',name:'winners',component:()=> import('@/views/Winners.vue')},
     {path:'/kontak',name:'contact',component:()=> import('@/views/Contact.vue')},
     {path:'/forgot',name:'forgotpassword',component:()=> import('@/views/forgotPass.vue')},
-
+    {path:'/inovasiku',name:'inovasiku',component:()=> import('@/views/Inovasiku.vue')},
     {path:'/pengajuan-inovasi',name:'pengajuan',component:()=> import('@/views/Pengajuan.vue')},
     {path:'/login',name:'userlogin',component:()=> import('@/views/Userlogin.vue')},
     {path:'/register',name:'register',component:()=> import('@/views/Register.vue')},

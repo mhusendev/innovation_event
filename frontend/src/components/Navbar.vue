@@ -47,7 +47,7 @@
 					<button v-on:click="showProfile()" :class="(title === 'Profile')?'text-blue-600':''" class="w-full text-left block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Profile</button>
 				</li>
 				<li>
-					<a href="/pengajuan-inovasi" :class="(title === 'Pengajuan')?'text-blue-600':''" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Inovasi ku</a>
+					<a href="/inovasiku" :class="(title === 'Pengajuan')?'text-blue-600':''" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Inovasi ku</a>
 				</li>
 				<li>
 					<a href="/pengajuan-inovasi" :class="(title === 'Pengajuan')?'text-blue-600':''" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Pengajuan Inovasi</a>

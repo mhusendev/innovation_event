@@ -57,7 +57,7 @@
                             <div class="w-full text-xs pl-1 "> {{ data.bentuk }}</div>
                         </div>
                     </div>
-                    <h3 class="border-b border-black w-fit mt-[2%] mb-2 text-sm">Deskripsi</h3>
+                    <h3 class="border-b border-black w-fit my-[5%] mb-2 text-sm">Deskripsi</h3>
                     <p class="text-sm  max-h-40 overflow-y-auto p-1" v-html="data.keterangan"></p>
                     <div class="w-full flex overflow-auto mt-5">
                         <div  v-for="d in data.docs" >

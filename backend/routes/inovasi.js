@@ -19,6 +19,8 @@ router.get('/inovasi_covid',inovasiCovid.getALL);
 router.get('/jenis_urusan', jenisUrusan.getALL);
 router.get('/tema',middleware.authorization,temaInovasi.getALL);
 router.get('/get_acc',inovasi.getAll_acc)
+router.get('/getbyuser',inovasi.getByuser)
+
 router.post('/acc_inovasi',middleware.authorization,inovasi.accInovasi)
 router.post('/reject_inovasi',middleware.authorization,inovasi.rejectInovasi)
 // multer
