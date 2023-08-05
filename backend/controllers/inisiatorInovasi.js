@@ -66,7 +66,9 @@ const update = async(req,res)=> {
 const destroy = async(req,res)=> {
   try{
     const {id} = req.body
-    let deleteData = await models.inisiator_inovasi.destroy({id:id})
+    let deleteData = await models.inisiator_inovasi.destroy({   where: {
+      id:id
+  }})
     if(deleteData){
       res.status(200).send({
         status:'OK',

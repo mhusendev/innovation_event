@@ -17,14 +17,14 @@ const cekNilai = async (nama_inovasi) => {
 }
 const create = async (req,res) =>{
    try{
-     const {nama_inovasi,nm_perangkat_daerah,nilai,tanggal_inovasi} = req.body
+     const {nama_inovasi,nm_perangkat_daerah,nilai,tanggal_inovasi,event} = req.body
       
       let cekdata = await cekNilai(nama_inovasi)
 
       if(cekdata) {
       
      let insert = await models.winners.create(
-        {nama_inovasi,nm_perangkat_daerah,nilai,tanggal_inovasi}
+        {nama_inovasi,nm_perangkat_daerah,nilai,tanggal_inovasi,event}
         )
         if(insert) {
             res.status(201).send({
@@ -81,9 +81,9 @@ const getAll = async(req,res)=> {
 
 const update = async(req,res)=> {
     try{
-      const {id,nilai} = req.body
+      const {id,nilai,event} = req.body
   
-      let change = await models.winners.update({nilai:nilai},{where: {id:id}})
+      let change = await models.winners.update({nilai:nilai,event:event},{where: {id:id}})
      if(change){
       res.status(201).send({
         status:'OK',

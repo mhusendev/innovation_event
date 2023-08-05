@@ -118,25 +118,32 @@ try {
     jenis_urusan_inovasi,tema,tanggal,
     no_dokumentasi,keterangan,acc,acc_by
    } = req.body
-   const data = await models.innovations.create({
-    nama_inovasi,inovator,
-    surat,proposal,nama_perangkat_daerah,tahapan,
-    inisiator,jenis,bentuk,inovasi_thdp_covid,
-    jenis_urusan_inovasi,tema,tanggal,
-    no_dokumentasi,keterangan,acc:'belum',act_by:''
-   })
-   if(data) {
-    res.status(201).send({
-        status: 'OK',
-        message: 'Submit Berhasil',
-    })
-   } 
-   else {
-    res.status(400).send({
-        status: 'ERROR',
-        message: 'Submit Gagal',
-    })
-}
+   if(!nama_inovasi||!nama_perangkat_daerah||!tahapan||!inisiator||
+    !jenis||!bentuk||!inovasi_thdp_covid||!jenis_urusan_inovasi
+    ||!tema||!tanggal||!keterangan)
+    {
+        
+    }else {
+        const data = await models.innovations.create({
+            nama_inovasi,inovator,
+            surat,proposal,nama_perangkat_daerah,tahapan,
+            inisiator,jenis,bentuk,inovasi_thdp_covid,
+            jenis_urusan_inovasi,tema,tanggal,
+            no_dokumentasi,keterangan,acc:'belum',act_by:''
+           })
+           if(data) {
+            res.status(201).send({
+                status: 'OK',
+                message: 'Submit Berhasil',
+            })
+           } 
+           else {
+            res.status(400).send({
+                status: 'ERROR',
+                message: 'Submit Gagal',
+            })
+        }
+    }
 }catch(err) {
     console.log(err)
     res.status(400).send({

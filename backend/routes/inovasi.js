@@ -20,7 +20,22 @@ router.get('/jenis_urusan', jenisUrusan.getALL);
 router.get('/tema',middleware.authorization,temaInovasi.getALL);
 router.get('/get_acc',inovasi.getAll_acc)
 router.get('/getbyuser',inovasi.getByuser)
-
+// post
+router.post('/tahapan',tahapanInovasi.create);
+router.post('/inisiator',inisiatorInovasi.create);
+router.post('/jenis_inovasi',jenisInovasi.create);
+router.post('/bentuk_inovasi',bentukInovasi.create);
+router.post('/inovasi_covid',inovasiCovid.create);
+router.post('/jenis_urusan',jenisUrusan.create);
+router.post('/tema',temaInovasi.create);
+// deleyte
+router.post('/tahapan/d',tahapanInovasi.destroy);
+router.post('/inisiator/d',inisiatorInovasi.destroy);
+router.post('/jenis_inovasi/d',jenisInovasi.destroy);
+router.post('/bentuk_inovasi/d',bentukInovasi.destroy);
+router.post('/inovasi_covid/d',inovasiCovid.destroy);
+router.post('/jenis_urusan/d',jenisUrusan.destroy);
+router.post('/tema/d',temaInovasi.create);
 router.post('/acc_inovasi',middleware.authorization,inovasi.accInovasi)
 router.post('/reject_inovasi',middleware.authorization,inovasi.rejectInovasi)
 // multer
@@ -36,7 +51,7 @@ const storageEngine = multer.diskStorage({
 
   const checkFileType = function (file, cb) {
     //Allowed file extensions
-    const fileTypes = /jpeg|jpg|png|mp4|pdf|docx|mkv/;
+    const fileTypes = /jpeg|jpg|png|mp4|pdf|mkv/;
   
     //check extension names
     const extName = fileTypes.test(path.extname(file.originalname).toLowerCase());
@@ -52,7 +67,7 @@ const storageEngine = multer.diskStorage({
   
   const upload = multer({
     storage: storageEngine,
-    limits: { fileSize: 100000000 },
+    limits: { fileSize: 1000000000 },
     fileFilter: (req, file, cb) => {
         checkFileType(file, cb);
       },

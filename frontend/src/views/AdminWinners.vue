@@ -51,6 +51,7 @@
                  
                   <th scope="col" class="px-6 py-3">Tanggal</th>
                   <th scope="col" class="px-6 py-3">Nilai</th>
+                  <th scope="col" class="px-6 py-3">Event</th>
                   <th scope="col" class="px-6 py-3">Opsi</th>
                 </tr>
               </thead>
@@ -74,6 +75,10 @@
                   </td>
                   <td class="px-6 py-4">
                     {{ winners.nilai }}
+                  </td>
+
+                  <td class="px-6 py-4">
+                    {{ winners.event }}
                   </td>
               
                   <td class="px-6 py-4">
@@ -110,6 +115,8 @@
     <input type="text" class="w-full" readonly v-model="modelWinners.tanggal_inovasi">
     <p class="mt-5 mb-2">Nilai</p>
     <input type="text" class="w-full"  v-model="modelWinners.nilai">
+    <p class="mt-5 mb-2">Event</p>
+    <input type="text" class="w-full"  v-model="modelWinners.event">
         <button v-on:click="save()" class="btn w-full bg-green-600 mt-5 hover:bg-green-300" v-if="modalTitle !== 'Edit'">Save</button> 
         <button v-on:click="update()" class="btn w-full bg-blue-600 mt-5 hover:bg-green-300" v-else>Update Nilai</button> 
     </div>
@@ -182,7 +189,8 @@ import '@vueup/vue-quill/dist/vue-quill.snow.css';
             nama_inovasi:'',
             nm_perangkat_daerah:'',
             nilai:'',
-            tanggal_inovasi:''
+            tanggal_inovasi:'',
+            event:''
         },
   
       };
@@ -240,6 +248,7 @@ import '@vueup/vue-quill/dist/vue-quill.snow.css';
          this.modelWinners.nm_perangkat_daerah = data.nm_perangkat_daerah
          this.modelWinners.tanggal_inovasi = data.tanggal_inovasi 
          this.modelWinners.nilai = data.nilai
+         this.modelWinners.event = data.event
          my_modal_3.showModal()
         },
         messageModal(){
@@ -318,6 +327,7 @@ import '@vueup/vue-quill/dist/vue-quill.snow.css';
        this.modelWinners.nilai = ''
        this.modelWinners.nm_perangkat_daerah =''
        this.modelWinners.tanggal_inovasi =''
+       this.modelWinners.event =''
         },
  
       async showModalAdd() {

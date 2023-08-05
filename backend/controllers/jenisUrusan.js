@@ -20,7 +20,7 @@ try{
 const create =async (req,res)=> {
   try{
     const {nama}= req.body
-     let post = await models.jenisUrusan.create({nama})
+     let post = await models.jenisUrusan.create({nama:nama})
      if(post){
       res.status(201).send({
         status:'OK',
@@ -46,7 +46,7 @@ const update = async(req,res)=> {
   try{
     const {id,nama} = req.body
 
-    let change = await models.jenisUrusan.update({nama},{where: {id:id}})
+    let change = await models.jenisUrusan.update({nama:nama},{where: {id:id}})
    if(change){
     res.status(201).send({
       status:'OK',
@@ -66,7 +66,9 @@ const update = async(req,res)=> {
 const destroy = async(req,res)=> {
   try{
     const {id} = req.body
-    let deleteData = await models.jenisUrusan.destroy({id})
+    let deleteData = await models.jenisUrusan.destroy({   where: {
+      id:id
+  }})
     if(deleteData){
       res.status(200).send({
         status:'OK',

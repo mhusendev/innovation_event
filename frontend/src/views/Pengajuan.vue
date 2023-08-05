@@ -5,19 +5,29 @@
     <div class="w-full px-10 py-10">
         <div class="w-full px-5 py-5 shadow-lg rounded-lg">
             <!-- form -->
-   <div class="grid md:grid-cols-4  grid-cols-1 gap-4">
+   <!-- alert -->
+            <div :class="(popalert?'':'hidden') " class="w-full px-5  mb-5  text-white ">
+              <div class="w-full px-5 py-3 text-white" :class="(messagealert == 'Berhasil')?'bg-green-600':'bg-red-600'">
+                {{ (messagealert == 'Berhasil')?'Berhasil Mengajukan Inovasi':this.messagealert }}
+              </div>
+              </div> 
+   <!-- end alert -->
+    <div class="grid md:grid-cols-4  grid-cols-1 gap-4">
   <div class="w-full">
     <p class="mb-2">Nama Inovasi</p>
-    <input type="text" class="w-full " v-model="nama_inovasi"/>
+    <input type="text" class="w-full " v-model="nama_inovasi" />
+    <span :class="validasi.val1 ? '':'hidden'" class="inline-flex text-sm text-red-700">data tidak boleh kosong*</span>
   </div>
   <div class="w-full">
     <p class="mb-2">Inovator</p>
     <input type="text" class="w-full " v-model="inovator"/>
+    <span :class="validasi.val2 ? '':'hidden'" class="inline-flex text-sm text-red-700">data tidak boleh kosong*</span>
   </div>
  
   <div class="w-full">
     <p class="mb-2">Nama Perangkat Daerah</p>
     <input type="text" class="w-full " v-model="nama_perangkat_daerah"/>
+    <span :class="validasi.val3 ? '':'hidden'" class="inline-flex text-sm text-red-700">data tidak boleh kosong*</span>
   </div>
   <div class="w-full">
     <p class="mb-2">Tahapan inovasi</p>
@@ -25,13 +35,15 @@
         <option value="--pilih--">--pilih--</option>
         <option v-for="tahapan in tahapan_inovasi" :selected="selectedTahapan_inovasi === tahapan.id" :value="tahapan.nama">{{ tahapan.nama }}</option>
     </select>
+    <span :class="validasi.val4 ? '':'hidden'" class="inline-flex text-sm text-red-700">data tidak boleh kosong*</span>
   </div>
   <div class="w-full">
-    <p class="mb-2">Inisator Inovasi</p>
+    <p class="mb-2">Inisiator Inovasi</p>
     <select class="w-full" v-model="selectedInisiator">
         <option value="--pilih--">--pilih--</option>
         <option v-for=" inisiator_inovasi in inisiator" :selected="selectedInisiator === inisiator_inovasi.id" :value="inisiator_inovasi.nama">{{ inisiator_inovasi.nama }}</option>
     </select>
+    <span :class="validasi.val5 ? '':'hidden'" class="inline-flex text-sm text-red-700">data tidak boleh kosong*</span>
   </div>
   <div class="w-full">
     <p class="mb-2">Jenis Inovasi</p>
@@ -39,6 +51,7 @@
         <option value="--pilih--">--pilih--</option>
         <option v-for=" jenis in jenis_inovasi" :selected="selectedJenisinovasi === jenis.id" :value="jenis.nama">{{ jenis.nama }}</option>
     </select>
+    <span :class="validasi.val6 ? '':'hidden'" class="inline-flex text-sm text-red-700">data tidak boleh kosong*</span>
 </div>
 <div class="w-full">
     <p class="mb-2">Bentuk Inovasi</p>
@@ -46,6 +59,7 @@
         <option value="--pilih--">--pilih--</option>
         <option v-for=" bentuk in bentuk_inovasi" :selected="selectedBentukinovasi === bentuk.id" :value="bentuk.nama">{{ bentuk.nama }}</option>
     </select>
+    <span :class="validasi.val7 ? '':'hidden'" class="inline-flex text-sm text-red-700">data tidak boleh kosong*</span>
 </div>
 <div class="w-full">
     <p class="mb-2">Inovasi Terhadap Pandemi Covid19</p>
@@ -53,6 +67,7 @@
         <option value="--pilih--">--pilih--</option>
         <option v-for=" inovasi_c in inovasi_covid" :selected="selectedInovasiCovid === inovasi_c.id" :value="inovasi_c.nama">{{ inovasi_c.nama }}</option>
     </select>
+    <span :class="validasi.val8 ? '':'hidden'" class="inline-flex text-sm text-red-700">data tidak boleh kosong*</span>
 </div>
 <div class="w-full">
     <p class="mb-2">Jenis Urusan Inovasi</p>
@@ -60,6 +75,7 @@
         <option value="--pilih--">--pilih--</option>
         <option v-for=" jenis_u in jenis_urusan" :selected="selectedJenisUrusan === jenis_u.id" :value="jenis_u.nama">{{ jenis_u.nama }}</option>
     </select>
+    <span :class="validasi.val9 ? '':'hidden'" class="inline-flex text-sm text-red-700">data tidak boleh kosong*</span>
 </div>
 <div class="w-full">
     <p class="mb-2">Tema Inovasi</p>
@@ -67,12 +83,14 @@
         <option value="--pilih--">--pilih--</option>
         <option v-for=" tema in tema" :selected="selectedTemaInovasi === tema.id" :value="tema.nama">{{ tema.nama }}</option>
     </select>
+    <span :class="validasi.val10 ? '':'hidden'" class="inline-flex text-sm text-red-700">data tidak boleh kosong*</span>
 </div>
   <!-- ... -->
   
    </div> 
     <div class="w-full mt-5">
         <p class="mb-2">Deskripsi Inovasi</p>
+        <span :class="validasi.val11 ? '':'hidden'" class="inline-flex text-sm text-red-700">data tidak boleh kosong*</span>
         <QuillEditor  contentType="html" theme="snow" v-model:content="keterangan"/>
         
     </div>
@@ -83,6 +101,7 @@
     <!-- table for upload -->
     <div class="w-full px-5 py-5 shadow-lg rounded-lg">
          <p class="mb-5 mt-2 border-b w-fit border-black pb-3">Upload Dokumentasi</p>
+         <p class="mb-5 text-sm">* Untuk Jenis File Proposal dan Surat adalah pdf , untuk vidio mkv/mp4, untuk gambar jpg/jpeg </p>
          <div class="w-[100%] grid grid-cols-1 md:grid-cols-3 gap-4">
             <input type="file" class="w-full" v-on:change="previewFiles" :multiple="false"/>
             <select class="w-ful mr-10" v-model="selectedDocs">
@@ -178,13 +197,63 @@ export default {
             inovasi_covid:[],
             jenis_urusan:[],
             tema:[],
-            keterangan:''
+            validasi:{
+              val1:false,
+              val2:false,
+              val3:false,
+              val4:false,
+              val5:false,
+              val6:false,
+              val7:false,
+              val8:false,
+              val9:false,
+              val10:false,
+              val11:false
+            },
+            keterangan:'',
+            popalert:false,
+            messagealert:'Berhasil'
         }
     },
     methods: {
+      validate () {
+       this.validasi.val1 = this.nama_inovasi?false:true
+       this.validasi.val2 = this.inovator?false:true
+       this.validasi.val3 = this.nama_perangkat_daerah?false:true
+       this.validasi.val4 = (this.selectedTahapan_inovasi == '--pilih--')?true:false
+       this.validasi.val5 = (this.selectedInisiator == '--pilih--')?true:false
+       this.validasi.val6 = (this.selectedJenisinovasi == '--pilih--')?true:false
+       this.validasi.val7 = (this.selectedBentukinovasi == '--pilih--')?true:false
+       this.validasi.val8 = (this.selectedInovasiCovid == '--pilih--')?true:false
+       this.validasi.val9 = (this.selectedJenisUrusan == '--pilih--')?true:false
+       this.validasi.val10 = (this.selectedTemaInovasi == '--pilih--')?true:false
+       this.validasi.val11 = this.keterangan?false:true
+
+       if(this.validasi.val1 == false && this.validasi.val2 == false
+       && this.validasi.val3 == false && this.validasi.val4 == false
+       && this.validasi.val5 == false  && this.validasi.val6 == false
+       && this.validasi.val7 == false  && this.validasi.val8 == false
+       && this.validasi.val9 == false  && this.validasi.val10 == false  && this.validasi.val11 == false) {
+        return true
+       } else {
+        return false
+       }
+
+      },
        async save(){
-         
-             try{
+        try{
+         let datavalidasi = await this.validate()
+         console.log(datavalidasi)
+         if(!datavalidasi) {
+         this.popalert=true
+         this.messagealert= 'Harap Periksa dan lengkapi data'
+         setTimeout(()=>{
+          this.popalert = false
+          this.messagealert = ''
+         },10000)
+
+         } else {
+           
               let data = await {
                nama_inovasi:this.nama_inovasi,
                inovator: this.inovator,
@@ -241,13 +310,19 @@ export default {
                   alert('submit gagal')
                 }
             }).catch((err)=> {
+              console.log(err)
               alert('submit gagal')
-              console.log(err)
+              this.savebtn = 'Submit'
+           
             })
-             }catch(err){
+             
 
-              console.log(err)
-             }
+         }
+        }catch(err){
+
+console.log(err)
+}
+       
         },
         async addFile(){
          

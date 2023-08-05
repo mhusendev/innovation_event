@@ -111,7 +111,7 @@
             <p>:  {{ datamodal.tahapan }}</p>
         </div>
         <div class="flex gap-4"> 
-            <p class="w-[41%]">bentuk inovasi </p>
+            <p class="w-[37%]">bentuk inovasi </p>
             <p>:  {{ datamodal.bentuk }}</p>
         </div>
         <div class="flex gap-4"> 

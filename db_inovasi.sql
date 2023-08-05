@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 21 Jun 2023 pada 06.13
+-- Waktu pembuatan: 04 Jul 2023 pada 08.11
 -- Versi server: 10.4.28-MariaDB
--- Versi PHP: 8.1.17
+-- Versi PHP: 7.4.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -45,6 +45,26 @@ INSERT INTO `bentuk_inovasi` (`id`, `nama`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Struktur dari tabel `contact`
+--
+
+CREATE TABLE `contact` (
+  `id` int(11) NOT NULL,
+  `telp` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `alamat` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data untuk tabel `contact`
+--
+
+INSERT INTO `contact` (`id`, `telp`, `email`, `alamat`) VALUES
+(1, '(021) 88961767', 'suport@rubikda.com', 'Jl. Jendral Ahmad Yani No. 1 Gd Perkantoran Lt Dasar, Bekasi');
+
+-- --------------------------------------------------------
+
+--
 -- Struktur dari tabel `docs`
 --
 
@@ -66,7 +86,18 @@ INSERT INTO `docs` (`id`, `no_dokumentasi`, `url_dokumen`, `jenis_docs`, `create
 (35, '6d7c4e10-f7c2-4329-b1fe-bde8fe35228a', 'files/1686412590485--826-Article Text-1123-1-10-20200513.pdf', 'proposal', '2023-06-10 15:57:16', '2023-06-10 15:57:16'),
 (36, '6d7c4e10-f7c2-4329-b1fe-bde8fe35228a', 'files/1686412591579--IMG-20230610-WA0001.jpg', 'foto dokumentasi', '2023-06-10 15:57:16', '2023-06-10 15:57:16'),
 (37, '6d7c4e10-f7c2-4329-b1fe-bde8fe35228a', 'files/1686412591862--IMG-20230608-WA0017.jpg', 'foto cover', '2023-06-10 15:57:16', '2023-06-10 15:57:16'),
-(38, '6d7c4e10-f7c2-4329-b1fe-bde8fe35228a', 'files/1686412592289--VID_20230607_113230.mp4', 'vidio dokumentasi', '2023-06-10 15:57:16', '2023-06-10 15:57:16');
+(38, '6d7c4e10-f7c2-4329-b1fe-bde8fe35228a', 'files/1686412592289--VID_20230607_113230.mp4', 'vidio dokumentasi', '2023-06-10 15:57:16', '2023-06-10 15:57:16'),
+(39, 'bb3d81f0-f6d6-4dbc-8875-699e5bcf544c', 'files/1687347875596--Gambar WhatsApp 2023-06-01 pukul 01.13.20.jpg', 'proposal', '2023-06-21 11:44:35', '2023-06-21 11:44:35'),
+(40, 'bb3d81f0-f6d6-4dbc-8875-699e5bcf544c', 'files/1687347875597--Gambar WhatsApp 2023-06-01 pukul 01.13.20.jpg', 'surat', '2023-06-21 11:44:35', '2023-06-21 11:44:35'),
+(41, '947479b4-0cd9-46f6-9b6b-1433c7b08f7b', 'files/1687349598985--1686412591862--IMG-20230608-WA0017.jpg.jpg', 'foto cover', '2023-06-21 12:13:18', '2023-06-21 12:13:18'),
+(42, '947479b4-0cd9-46f6-9b6b-1433c7b08f7b', 'files/1687349598987--Gambar WhatsApp 2023-06-01 pukul 01.13.20.jpg', 'foto dokumentasi', '2023-06-21 12:13:19', '2023-06-21 12:13:19'),
+(43, 'e6d8f5ae-1609-4536-beff-182370d58464', 'files/1687589775088--62a34ea434af3.jpg', 'foto cover', '2023-06-24 06:56:15', '2023-06-24 06:56:15'),
+(44, 'e6d8f5ae-1609-4536-beff-182370d58464', 'files/1687589775090--62a34ea434af3.jpg', 'proposal', '2023-06-24 06:56:15', '2023-06-24 06:56:15'),
+(45, 'e6d8f5ae-1609-4536-beff-182370d58464', 'files/1687589775095--62a34ea434af3.jpg', 'surat', '2023-06-24 06:56:15', '2023-06-24 06:56:15'),
+(46, 'bb51bc8c-9c0e-4d55-bca1-6b7b7b98191a', 'files/1688325294697--2.jpg', 'foto cover', '2023-07-02 19:14:54', '2023-07-02 19:14:54'),
+(47, 'bb51bc8c-9c0e-4d55-bca1-6b7b7b98191a', 'files/1688325294704--2023-07-01 14-28-05.mp4', 'vidio dokumentasi', '2023-07-02 19:14:54', '2023-07-02 19:14:54'),
+(48, 'bb51bc8c-9c0e-4d55-bca1-6b7b7b98191a', 'files/1688325294812--Wed Apr 27 2022 12_49_35 GMT+0700 (Western Indonesia Time).pdf', 'surat', '2023-07-02 19:14:54', '2023-07-02 19:14:54'),
+(49, 'bb51bc8c-9c0e-4d55-bca1-6b7b7b98191a', 'files/1688325294813--Wed Apr 27 2022 12_49_35 GMT+0700 (Western Indonesia Time).pdf', 'proposal', '2023-07-02 19:14:54', '2023-07-02 19:14:54');
 
 -- --------------------------------------------------------
 
@@ -92,8 +123,7 @@ CREATE TABLE `events` (
 
 INSERT INTO `events` (`id`, `judul`, `tanggal`, `poster`, `deskripsi`, `start`, `end`, `create_by`, `edited_by`) VALUES
 (12, 'FIFA Matchday INDONESIA VS ARGENTINA', '1 June 2023', 'files/1687114741643--Para-pemain-Timnas-Indonesia-vs-Argentina-agenda-FIFA-Matchday-2023.jpg', '<p>Saksikan FIFA Match DAy Indonesia Melawan Argentina yang akan diselengarakan di Stadion Glora Bung Karno Pada tanggal 19 Juni 2023.</p><p>daftar harga tiket sebagai berikut :</p><ul><li>1. Set 1 350k</li><li>2. Set 2 650k</li><li>3. Set 3 850k</li><li>4. Set 4 1050k</li><li>5. Set 5 2350k</li></ul><p><br></p><p>Demikian harga tiket FIFA Matchday , untuk penukaran tiket akan dilaksanakan dihari pertandingan 3 jam sebelum kick of</p><p>untuk pembelian tiket bisa klik link berikut:</p><p><a href=\"https://ticket.com/fifamatchday\" rel=\"noopener noreferrer\" target=\"_blank\">https://ticket.com/fifamatchday</a></p>', '2023-06-19', '2023-06-19', 'admin@gmail.com', 'admin@gmail.com'),
-(13, 'Sakura Matsuri', '19 June 2023', 'files/1687114854830--maxresdefault.jpg', '<p>A <strong>cherry blossom</strong>, also known as a <strong>Japanese cherry</strong> or <strong>sakura</strong>, is a <a href=\"https://en.wikipedia.org/wiki/Flower\" rel=\"noopener noreferrer\" target=\"_blank\">flower</a> of many trees of <a href=\"https://en.wikipedia.org/wiki/Prunus\" rel=\"noopener noreferrer\" target=\"_blank\">genus <em>Prunus</em></a> or <a href=\"https://en.wikipedia.org/wiki/Prunus_subg._Cerasus\" rel=\"noopener noreferrer\" target=\"_blank\"><em>Prunus</em> subgenus. <em>Cerasus</em></a>. Wild <a href=\"https://en.wikipedia.org/wiki/Species\" rel=\"noopener noreferrer\" target=\"_blank\">species</a> of the cherry tree are widely distributed, mainly in the Northern hemisphere.<a href=\"https://en.wikipedia.org/wiki/Cherry_blossom#cite_note-4\" rel=\"noopener noreferrer\" target=\"_blank\"><sup>[4]</sup></a><a href=\"https://en.wikipedia.org/wiki/Cherry_blossom#cite_note-sakuranokai-5\" rel=\"noopener noreferrer\" target=\"_blank\"><sup>[5]</sup></a><a href=\"https://en.wikipedia.org/wiki/Cherry_blossom#cite_note-6\" rel=\"noopener noreferrer\" target=\"_blank\"><sup>[6]</sup></a> They are common in East Asia, including China, Korea and especially in Japan. They generally refer to ornamental cherry trees, and not <a href=\"https://en.wikipedia.org/wiki/Cherry_tree\" rel=\"noopener noreferrer\" target=\"_blank\">cherry trees that produce fruit for eating</a>.<a href=\"https://en.wikipedia.org/wiki/Cherry_blossom#cite_note-katsuki201514-7\" rel=\"noopener noreferrer\" target=\"_blank\"><sup>[7]</sup></a><a href=\"https://en.wikipedia.org/wiki/Cherry_blossom#cite_note-8\" rel=\"noopener noreferrer\" target=\"_blank\"><sup>[8]</sup></a> The cherry blossom is considered the <a href=\"https://en.wikipedia.org/wiki/National_flower\" rel=\"noopener noreferrer\" target=\"_blank\">national flower</a> of Japan.<a href=\"https://en.wikipedia.org/wiki/Cherry_blossom#cite_note-9\" rel=\"noopener noreferrer\" target=\"_blank\"><sup>[9]</sup></a></p><p><strong>In </strong><a href=\"https://en.wikipedia.org/wiki/Europe\" rel=\"noopener noreferrer\" target=\"_blank\">Europe</a>, from the late 19th century to the early 20th century, <a href=\"https://en.wikipedia.org/wiki/Collingwood_Ingram\" rel=\"noopener noreferrer\" target=\"_blank\">Collingwood Ingram</a>, an Englishman, collected and studied Japanese cherry blossoms, and created various ornamental cultivars, and the culture of cherry blossom viewing began to be spread. In the <a href=\"https://en.wikipedia.org/wiki/United_States\" rel=\"noopener noreferrer\" target=\"_blank\">United States</a>, cherry blossom viewing began to spread after Japan presented cherry blossoms as a token of friendship in 1912.<a href=\"https://en.wikipedia.org/wiki/Cherry_blossom#cite_note-katsuki2015119-10\" rel=\"noopener noreferrer\" target=\"_blank\"><sup>[10]</sup></a> Cherry blossoms have been described to have a beautiful smell and have been the inspiration for many candles and incense for household use.</p>', '2023-11-20', '2023-06-22', 'admin@gmail.com', ''),
-(14, 'Coudplay Konser', '19 June 2023', 'files/1687115047635--20230517_124613-1.jpg', '<p><strong>Coldplay</strong> adalah grup musik <a href=\"https://id.wikipedia.org/wiki/Musik_rok\" rel=\"noopener noreferrer\" target=\"_blank\">rock</a> Inggris yang dibentuk tahun 1997. Saat ini beranggotakan <a href=\"https://id.wikipedia.org/wiki/Chris_Martin\" rel=\"noopener noreferrer\" target=\"_blank\">Chris Martin</a> sebagai vokalis, <a href=\"https://id.wikipedia.org/wiki/Jonny_Buckland\" rel=\"noopener noreferrer\" target=\"_blank\">Jonny Buckland</a> sebagai gitaris, <a href=\"https://id.wikipedia.org/wiki/Guy_Berryman\" rel=\"noopener noreferrer\" target=\"_blank\">Guy Berryman</a> sebagai bassis, <a href=\"https://id.wikipedia.org/wiki/Will_Champion\" rel=\"noopener noreferrer\" target=\"_blank\">Will Champion</a> sebagai drumer dan perkusionis, dan <a href=\"https://id.wikipedia.org/w/index.php?title=Phil_Harvey_(manager)&amp;action=edit&amp;redlink=1\" rel=\"noopener noreferrer\" target=\"_blank\">Phil Harvey</a> sebagai pengarah kreatif.<a href=\"https://id.wikipedia.org/wiki/Coldplay#cite_note-MEOW13-3\" rel=\"noopener noreferrer\" target=\"_blank\"><sup>[a]</sup></a> Mereka bertemu saat menjalani kuliah di <a href=\"https://id.wikipedia.org/wiki/Universitas_Kolese_London\" rel=\"noopener noreferrer\" target=\"_blank\">University College London</a> (UCL) dan mulai bermusik sejak 1997 hingga 1998, awalnya bernama Starfish.</p><p>Setelah merilis EP pertamanya, <a href=\"https://id.wikipedia.org/w/index.php?title=Safety_(EP)&amp;action=edit&amp;redlink=1\" rel=\"noopener noreferrer\" target=\"_blank\"><em>Safety</em></a> (1998), Coldplay mulai menandatangani kontrak dengan <a href=\"https://id.wikipedia.org/w/index.php?title=Parlophone&amp;action=edit&amp;redlink=1\" rel=\"noopener noreferrer\" target=\"_blank\">Parlophone</a> tahun 1999. Album debutnya, <a href=\"https://id.wikipedia.org/wiki/Parachutes\" rel=\"noopener noreferrer\" target=\"_blank\"><em>Parachutes</em></a> (2000), memuat singel perdananya \"<a href=\"https://id.wikipedia.org/wiki/Yellow_(lagu_Coldplay)\" rel=\"noopener noreferrer\" target=\"_blank\">Yellow</a>\" meraih Penghargaan Brit untuk Album Britania Raya Tahun Ini, <a href=\"https://id.wikipedia.org/w/index.php?title=Penghargaan_Grammy_untuk_Album_Alternatif_Terbaik&amp;action=edit&amp;redlink=1\" rel=\"noopener noreferrer\" target=\"_blank\">Penghargaan Grammy untuk Album Alternatif Terbaik</a>, dan nominasi <a href=\"https://id.wikipedia.org/wiki/Mercury_Prize\" rel=\"noopener noreferrer\" target=\"_blank\">Mercury Prize</a>. Album keduanya, <a href=\"https://id.wikipedia.org/wiki/A_Rush_of_Blood_to_the_Head\" rel=\"noopener noreferrer\" target=\"_blank\"><em>A Rush of Blood to the Head</em></a> (2002), memenangkan prestasi yang sama, berisi singel \"<a href=\"https://id.wikipedia.org/w/index.php?title=Clocks&amp;action=edit&amp;redlink=1\" rel=\"noopener noreferrer\" target=\"_blank\">Clocks</a>\" yang berhasil memenangkan <a href=\"https://id.wikipedia.org/wiki/Penghargaan_Grammy_untuk_Rekaman_Terbaik_Tahun_Ini\" rel=\"noopener noreferrer\" target=\"_blank\">Penghargaan Grammy untuk Rekaman Terbaik Tahun Ini</a>. Album ketiganya, <a href=\"https://id.wikipedia.org/wiki/X%26Y\" rel=\"noopener noreferrer\" target=\"_blank\"><em>X&amp;Y</em></a> (2005), yang melengkapi \"trilogi\" mereka, serta album keempat, <a href=\"https://id.wikipedia.org/wiki/Viva_la_Vida_or_Death_and_All_His_Friends\" rel=\"noopener noreferrer\" target=\"_blank\"><em>Viva la Vida or Death and All His Friends</em></a> (2008), kedua-duanya dinominasikan di <a href=\"https://id.wikipedia.org/wiki/Penghargaan_Grammy_untuk_Album_Rock_Terbaik\" rel=\"noopener noreferrer\" target=\"_blank\">Penghargaan Grammy untuk Album Rock Terbaik</a>, yang terakhir menang; keduanya menjadi <a href=\"https://id.wikipedia.org/w/index.php?title=Daftar_album_dengan_penjualan_terbaik&amp;action=edit&amp;redlink=1\" rel=\"noopener noreferrer\" target=\"_blank\">album dengan penjualan terbaik pada masing-masing tahun</a>, memuncaki tangga album di 30 negara. <em>Viva la Vida</em> juga dinominasikan sebagai <a href=\"https://id.wikipedia.org/wiki/Penghargaan_Grammy_untuk_Album_Terbaik_Tahun_Ini\" rel=\"noopener noreferrer\" target=\"_blank\">Album Terbaik Tahun Ini</a>, dan <a href=\"https://id.wikipedia.org/wiki/Viva_la_Vida\" rel=\"noopener noreferrer\" target=\"_blank\">trek judulnya</a> menjadi singel pertama bagi grup musik Britania Raya yang secara simultan menduduki posisi pertama di Britania Raya dan Amerika Serikat sepanjang abad ke-21.</p><p>Coldplay kemudian mendiversifikasi suaranya selama 5 album studio berikutnya, yang terbaru adalah <a href=\"https://id.wikipedia.org/w/index.php?title=Music_of_the_Spheres_(Coldplay_album)&amp;action=edit&amp;redlink=1\" rel=\"noopener noreferrer\" target=\"_blank\"><em>Music of the Spheres</em></a> (2021). Setiap album memuat tema yang khas dan menambah gaya-gaya baru ke dalam repertoar aslinya, seperti <a href=\"https://id.wikipedia.org/wiki/Electronica\" rel=\"noopener noreferrer\" target=\"_blank\">electronica</a>, <a href=\"https://id.wikipedia.org/w/index.php?title=Musik_ambien&amp;action=edit&amp;redlink=1\" rel=\"noopener noreferrer\" target=\"_blank\">ambien</a>, <a href=\"https://id.wikipedia.org/wiki/Musik_pop\" rel=\"noopener noreferrer\" target=\"_blank\">pop</a>, <a href=\"https://id.wikipedia.org/wiki/R%26B_kontemporer\" rel=\"noopener noreferrer\" target=\"_blank\">R&amp;B</a>, <a href=\"https://id.wikipedia.org/wiki/Musik_klasik\" rel=\"noopener noreferrer\" target=\"_blank\">klasik</a>, dan <a href=\"https://id.wikipedia.org/wiki/Progressive_rock\" rel=\"noopener noreferrer\" target=\"_blank\">rock progresif</a>. Mereka dikenal karena penampilan panggungnya yang \"euforis\"<a href=\"https://id.wikipedia.org/wiki/Coldplay#cite_note-4\" rel=\"noopener noreferrer\" target=\"_blank\"><sup>[3]</sup></a> dan \"menghanyutkan\",<a href=\"https://id.wikipedia.org/wiki/Coldplay#cite_note-5\" rel=\"noopener noreferrer\" target=\"_blank\"><sup>[4]</sup></a> yang dianggap <a href=\"https://id.wikipedia.org/wiki/NME\" rel=\"noopener noreferrer\" target=\"_blank\"><em>NME</em></a> sebagai \"sangat hidup dan paling masuk akal\".<a href=\"https://id.wikipedia.org/wiki/Coldplay#cite_note-JORDAN-6\" rel=\"noopener noreferrer\" target=\"_blank\"><sup>[5]</sup></a> Pada 2018, sebuah <a href=\"https://id.wikipedia.org/w/index.php?title=Coldplay:_A_Head_Full_of_Dreams&amp;action=edit&amp;redlink=1\" rel=\"noopener noreferrer\" target=\"_blank\">film dokumenter</a> yang disutradarai <a href=\"https://id.wikipedia.org/w/index.php?title=Mat_Whitecross&amp;action=edit&amp;redlink=1\" rel=\"noopener noreferrer\" target=\"_blank\">Mat Whitecross</a> dirilis di bioskop untuk memperingati ulang tahunnya yang ke-20</p>', '2023-06-30', '2023-07-01', 'admin@gmail.com', '');
+(13, 'Sakura Matsuri', '19 June 2023', 'files/1687114854830--maxresdefault.jpg', '<p>A <strong>cherry blossom</strong>, also known as a <strong>Japanese cherry</strong> or <strong>sakura</strong>, is a <a href=\"https://en.wikipedia.org/wiki/Flower\" rel=\"noopener noreferrer\" target=\"_blank\">flower</a> of many trees of <a href=\"https://en.wikipedia.org/wiki/Prunus\" rel=\"noopener noreferrer\" target=\"_blank\">genus <em>Prunus</em></a> or <a href=\"https://en.wikipedia.org/wiki/Prunus_subg._Cerasus\" rel=\"noopener noreferrer\" target=\"_blank\"><em>Prunus</em> subgenus. <em>Cerasus</em></a>. Wild <a href=\"https://en.wikipedia.org/wiki/Species\" rel=\"noopener noreferrer\" target=\"_blank\">species</a> of the cherry tree are widely distributed, mainly in the Northern hemisphere.<a href=\"https://en.wikipedia.org/wiki/Cherry_blossom#cite_note-4\" rel=\"noopener noreferrer\" target=\"_blank\"><sup>[4]</sup></a><a href=\"https://en.wikipedia.org/wiki/Cherry_blossom#cite_note-sakuranokai-5\" rel=\"noopener noreferrer\" target=\"_blank\"><sup>[5]</sup></a><a href=\"https://en.wikipedia.org/wiki/Cherry_blossom#cite_note-6\" rel=\"noopener noreferrer\" target=\"_blank\"><sup>[6]</sup></a> They are common in East Asia, including China, Korea and especially in Japan. They generally refer to ornamental cherry trees, and not <a href=\"https://en.wikipedia.org/wiki/Cherry_tree\" rel=\"noopener noreferrer\" target=\"_blank\">cherry trees that produce fruit for eating</a>.<a href=\"https://en.wikipedia.org/wiki/Cherry_blossom#cite_note-katsuki201514-7\" rel=\"noopener noreferrer\" target=\"_blank\"><sup>[7]</sup></a><a href=\"https://en.wikipedia.org/wiki/Cherry_blossom#cite_note-8\" rel=\"noopener noreferrer\" target=\"_blank\"><sup>[8]</sup></a> The cherry blossom is considered the <a href=\"https://en.wikipedia.org/wiki/National_flower\" rel=\"noopener noreferrer\" target=\"_blank\">national flower</a> of Japan.<a href=\"https://en.wikipedia.org/wiki/Cherry_blossom#cite_note-9\" rel=\"noopener noreferrer\" target=\"_blank\"><sup>[9]</sup></a></p><p><strong>In </strong><a href=\"https://en.wikipedia.org/wiki/Europe\" rel=\"noopener noreferrer\" target=\"_blank\">Europe</a>, from the late 19th century to the early 20th century, <a href=\"https://en.wikipedia.org/wiki/Collingwood_Ingram\" rel=\"noopener noreferrer\" target=\"_blank\">Collingwood Ingram</a>, an Englishman, collected and studied Japanese cherry blossoms, and created various ornamental cultivars, and the culture of cherry blossom viewing began to be spread. In the <a href=\"https://en.wikipedia.org/wiki/United_States\" rel=\"noopener noreferrer\" target=\"_blank\">United States</a>, cherry blossom viewing began to spread after Japan presented cherry blossoms as a token of friendship in 1912.<a href=\"https://en.wikipedia.org/wiki/Cherry_blossom#cite_note-katsuki2015119-10\" rel=\"noopener noreferrer\" target=\"_blank\"><sup>[10]</sup></a> Cherry blossoms have been described to have a beautiful smell and have been the inspiration for many candles and incense for household use.</p>', '2023-11-20', '2023-06-22', 'admin@gmail.com', '');
 
 -- --------------------------------------------------------
 
@@ -138,7 +168,7 @@ CREATE TABLE `innovations` (
   `tema` varchar(255) DEFAULT NULL,
   `tanggal` varchar(255) DEFAULT NULL,
   `no_dokumentasi` varchar(255) DEFAULT NULL,
-  `keterangan` varchar(255) DEFAULT NULL,
+  `keterangan` text DEFAULT NULL,
   `acc` varchar(255) DEFAULT NULL,
   `act_by` varchar(255) DEFAULT NULL,
   `createdAt` datetime NOT NULL,
@@ -151,7 +181,10 @@ CREATE TABLE `innovations` (
 
 INSERT INTO `innovations` (`id`, `email_user`, `nama_inovasi`, `inovator`, `nama_perangkat_daerah`, `tahapan`, `inisiator`, `jenis`, `bentuk`, `inovasi_thdp_covid`, `jenis_urusan_inovasi`, `tema`, `tanggal`, `no_dokumentasi`, `keterangan`, `acc`, `act_by`, `createdAt`, `updatedAt`) VALUES
 (16, 'mhusendev@gmail.com', 'design logo', 'mhusen', 'kabupaten', 'inisiatif', 'Perangkat Daerah', 'digital', 'Inovasi pelayanan Publik', 'non covid', 'pendidikan', 'penanganan tata kelola smart city', '6/5/2023', '6d7c4e10-f7c2-4329-b1fe-bde8fe35228a', 'membuat design untuk ulang tahun kabupaten bekasi, tema design harus menggunakan bahan formal', 'sudah', 'admin@gmail.com', '2023-06-10 15:57:16', '2023-06-10 15:58:12'),
-(17, 'awangdidit123@gmail.com', 'Pendataan warga menggunakan QrCode', 'Awang', 'Balitbangda', 'inisiatif', 'Perangkat Daerah', 'digital', 'Inovasi pelayanan Publik', 'non covid', 'pendidikan', 'penanganan tata kelola smart city', '6/5/2023', '21887e66-8605-4a28-942c-e5a317441e5b', 'Test', '0', NULL, '2023-06-10 16:18:50', '2023-06-10 16:18:50');
+(18, 'mhusendev@gmail.com', 'test', 'mhusen', 'balitbangda', 'inisiatif', 'Kepala Daerah', 'digital', 'inovasi daerah lainya sesuai dengan urusan pemerintahan yang menjadi kewenangan daerah', 'non covid', 'pendidikan', 'panggulanang covid19', '21/5/2023', 'bb3d81f0-f6d6-4dbc-8875-699e5bcf544c', '<p>asdaqwasdqwadsqwdasdqwdasdqwdadadq</p>', 'sudah', 'admin@gmail.com', '2023-06-21 11:44:35', '2023-06-21 11:44:50'),
+(19, 'mhusendev@gmail.com', 'asdqwa', 'asdasd', 'asdasd', 'inisiatif', 'Kepala Daerah', 'digital', 'inovasi daerah lainya sesuai dengan urusan pemerintahan yang menjadi kewenangan daerah', 'non covid', 'pendidikan', 'panggulanang covid19', '21/5/2023', '947479b4-0cd9-46f6-9b6b-1433c7b08f7b', '<p>asdasdasdasdasd</p>', 'sudah', 'admin@gmail.com', '2023-06-21 12:13:19', '2023-06-21 12:13:38'),
+(20, 'mhusendev@gmail.com', 'qwertqwe', 'asdqweasd', 'qweqwedas', 'inisiatif', 'Kepala Daerah', 'digital', 'inovasi daerah lainya sesuai dengan urusan pemerintahan yang menjadi kewenangan daerah', 'non covid', 'pendidikan', 'panggulanang covid19', '24/5/2023', 'e6d8f5ae-1609-4536-beff-182370d58464', '<h3>The standard Lorem Ipsum passage, used since the 1500s</h3><p>\r\nThe standard Lorem Ipsum passage, used since the 1500s\r\n\r\n\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\"\r\nSection 1.10.32 of \"de Finibus Bonorum et Malorum\", written by Cicero in 45 BC\r\n\r\n\"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?\"\r\n1914 translation by H. Rackham\r\n\r\n\"But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness. No one rejects, dislikes, or avoids pleasure itself, because it is pleasure, but because those who do not know how to pursue pleasure rationally encounter consequences that are extremely painful. Nor again is there anyone who loves or pursues or desires to obtain pain of itself, because it is pain, but because occasionally circumstances occur in which toil and pain can procure him some great pleasure. To take a trivial example, which of us ever undertakes laborious physical exercise, except to obtain some advantage from it? But who has any right to find fault with a man who chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that produces no resultant pleasure?\"\r\nSection 1.10.33 of \"de Finibus Bonorum et Malorum\", written by Cicero in 45 BC\r\n\r\n\"At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.\"\r\n1914 translation by H. Rackham\r\n\r\n\"On the other hand, we denounce with righteous indignation and dislike men who are so beguiled and demoralized by the charms of pleasure of the moment, so blinded by desire, that they cannot foresee the pain and trouble that are bound to ensue; and equal blame belongs to those who fail in their duty through weakness of will, which is the same as saying through shrinking from toil and pain. These cases are perfectly simple and easy to distinguish. In a free hour, when our power of choice is untrammelled and when nothing prevents our being able to do what we like best, every pleasure is to be welcomed and every pain avoided. But in certain circumstances and owing to the claims of duty or the obligations of business it will frequently occur that pleasures have to be repudiated and annoyances accepted. The wise man therefore always holds in these matters to this principle of selection: he rejects pleasures to secure other greater pleasures, or else he endures pains to avoid worse pains.\"\r\n</p>', 'sudah', 'admin@gmail.com', '2023-06-24 06:56:15', '2023-06-24 06:57:00'),
+(21, 'mhusendev@gmail.com', 'coba', 'awang', 'balitbangda', 'inisiatif', 'Kepala Daerah', 'digital', 'inovasi daerah lainya sesuai dengan urusan pemerintahan yang menjadi kewenangan daerah', 'non covid', 'pendidikan', 'panggulanang covid19', '3/6/2023', 'bb51bc8c-9c0e-4d55-bca1-6b7b7b98191a', '<h3>The standard Lorem Ipsum passage, used since the 1500s</h3><p>The standard Lorem Ipsum passage, used since the 1500s \"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\" Section 1.10.32 of \"de Finibus Bonorum et Malorum\", written by Cicero in 45 BC \"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?\" 1914 translation by H. Rackham \"But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness. No one rejects, dislikes, or avoids pleasure itself, because it is pleasure, but because those who do not know how to pursue pleasure rationally encounter consequences that are extremely painful. Nor again is there anyone who loves or pursues or desires to obtain pain of itself, because it is pain, but because occasionally circumstances occur in which toil and pain can procure him some great pleasure. To take a trivial example, which of us ever undertakes laborious physical exercise, except to obtain some advantage from it? But who has any right to find fault with a man who chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that produces no resultant pleasure?\" Section 1.10.33 of \"de Finibus Bonorum et Malorum\", written by Cicero in 45 BC \"At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.\" 1914 translation by H. Rackham \"On the other hand, we denounce with righteous indignation and dislike men who are so beguiled and demoralized by the charms of pleasure of the moment, so blinded by desire, that they cannot foresee the pain and trouble that are bound to ensue; and equal blame belongs to those who fail in their duty through weakness of will, which is the same as saying through shrinking from toil and pain. These cases are perfectly simple and easy to distinguish. In a free hour, when our power of choice is untrammelled and when nothing prevents our being able to do what we like best, every pleasure is to be welcomed and every pain avoided. But in certain circumstances and owing to the claims of duty or the obligations of business it will frequently occur that pleasures have to be repudiated and annoyances accepted. The wise man therefore always holds in these matters to this principle of selection: he rejects pleasures to secure other greater pleasures, or else he endures pains to avoid worse pains.\"</p>', 'sudah', 'admin@gmail.com', '2023-07-02 19:14:54', '2023-07-02 19:15:43');
 
 -- --------------------------------------------------------
 
@@ -292,7 +325,7 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `fullname`, `email`, `password`, `phone`, `instansi`, `level`, `createdAt`, `updatedAt`) VALUES
 (1, 'admin', 'admin@gmail.com', '$2b$10$2Wg/hOmDzuloAol9TTIaAucsf6CXgnz9MSH8nA.Mk0hEC0b7WmJ8.', '021888888', 'all', 1, '2023-05-21 12:23:50', '2023-05-21 12:23:50'),
-(6, 'Muhammad Husen', 'mhusendev@gmail.com', '$2b$10$LuWPU9bocX/P7z41ANLbju3sLycI9XmXd3zvSVCv3lo5sI.uWumXa', '+6289528995437', 'kecamatan', 0, '2023-05-24 14:10:09', '2023-05-24 14:10:09'),
+(6, 'Muhammad Husen', 'mhusendev@gmail.com', '$2b$10$z5Wn4nZyF/6bpwRSazCWl.ufK2hN0cRIbFaSvBE562s3xZ5oLgZpq', '+6289528995437', 'kecamatan', 0, '2023-05-24 14:10:09', '2023-07-02 18:37:02'),
 (10, 'awang', 'awangdidit123@gmail.com', '$2b$10$iX80.D8/I/8Q/XgpadLzJOiO6b70h7i/y4UylSFOyd/3Z27EQkQNi', '081214775272', 'balitbang', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
@@ -310,6 +343,15 @@ CREATE TABLE `winners` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
+-- Dumping data untuk tabel `winners`
+--
+
+INSERT INTO `winners` (`id`, `nama_inovasi`, `nm_perangkat_daerah`, `nilai`, `tanggal_inovasi`) VALUES
+(4, 'design logo', 'kabupaten', '89', '6/5/2023'),
+(5, 'test', 'balitbangda', '83', '21/5/2023'),
+(6, 'asdqwa', 'asdasd', '90', '21/5/2023');
+
+--
 -- Indexes for dumped tables
 --
 
@@ -317,6 +359,12 @@ CREATE TABLE `winners` (
 -- Indeks untuk tabel `bentuk_inovasi`
 --
 ALTER TABLE `bentuk_inovasi`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indeks untuk tabel `contact`
+--
+ALTER TABLE `contact`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -403,10 +451,16 @@ ALTER TABLE `bentuk_inovasi`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
+-- AUTO_INCREMENT untuk tabel `contact`
+--
+ALTER TABLE `contact`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT untuk tabel `docs`
 --
 ALTER TABLE `docs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 
 --
 -- AUTO_INCREMENT untuk tabel `events`
@@ -424,7 +478,7 @@ ALTER TABLE `inisiator_inovasi`
 -- AUTO_INCREMENT untuk tabel `innovations`
 --
 ALTER TABLE `innovations`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT untuk tabel `inovasi_covid`
@@ -466,7 +520,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT untuk tabel `winners`
 --
 ALTER TABLE `winners`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

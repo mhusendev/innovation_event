@@ -16,7 +16,7 @@
                 <tr>
                   <th scope="col" class="px-6 py-3">Nama</th>
                   <th scope="col" class="px-6 py-3">Perangkat Daerah</th>
-                 
+                  <th scope="col" class="px-6 py-3">Event</th>
                   <th scope="col" class="px-6 py-3">Tanggal</th>
                   <th scope="col" class="px-6 py-3">Nilai</th>
                  
@@ -36,6 +36,9 @@
   
                   <td class="px-6 py-4">
                     {{ winners.nm_perangkat_daerah }}
+                  </td>
+                  <td class="px-6 py-4">
+                    {{ winners.event }}
                   </td>
                   <td class="px-6 py-4">
                     {{ winners.tanggal_inovasi }}

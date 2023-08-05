@@ -19,9 +19,12 @@ var winners = db.define(
         },
         tanggal_inovasi: { type: sequelize.STRING,
             allowNull:false },
+            event: { type: sequelize.STRING,
+              allowNull:false },
         
       
     },
+    
     {
         // freeze name table not using *s on name
         freezeTableName: false,

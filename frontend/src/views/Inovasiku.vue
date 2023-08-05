@@ -81,17 +81,12 @@
                   {{ inovasi.inisiator }}
                 </td>
                 <td class="px-6 py-4">
-                  {{ inovasi.acc }}
+                  {{ (inovasi.acc == 1)? 'Sudah Acc':'Belum Acc' }}
                 </td>
                 <td class="px-6 py-4">
                     <div class="flex gap-2">
                       <button class="btn" v-on:click="showDetail(inovasi)">detail</button>
-                      <button
-                      :class="(inovasi.acc ==='sudah')?'hidden':''" 
-                      class="btn btn-success text-white" v-on:click="accInovasi(inovasi.id)">acc</button>
-                      <button 
-                      :class="(inovasi.acc ==='sudah' || inovasi.acc ==='rejected' )?'hidden':''"
-                       class="btn bg-red-700 text-white" v-on:click="rejectInovasi(inovasi.id)">reject</button>
+                     
                     </div>
                 </td>
               </tr>
