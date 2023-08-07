@@ -36,8 +36,10 @@
                 v-model="register.email"
                   class="text-slate-500  placeholder:text-sm w-full  rounded-full px-5 text-lg py-2 border-b border-gray-300 focus:outline-none focus:border-blue-500"
                   type="email"
+                  v-on:keypress="isEmail()"
                   placeholder="Mike@gmail.com"
                 />
+                     <p :class="validating.isEmail ?'hidden':''"  class="text-xs ml-5 text-red-600">harap menggunakan email * </p>
                     </div>
                  </div>   
                  <div class="w-full flex mt-10">
@@ -45,10 +47,12 @@
                         <p class="text-white mb-2 pl-3 font-bold">Phone</p>
                     <input
                     v-model="register.phone"
+                  v-on:keypress="isNumber()"
                   class="text-slate-500  placeholder:text-sm w-full rounded-full text-lg py-2 px-5 border-b border-gray-300 focus:outline-none focus:border-blue-500"
                   type="text"
                   placeholder="08123456789"
                 />
+                <p :class="validating.isNumber ?'hidden':''"  class="text-xs ml-5 text-red-600">harap masukan nomor * </p>
                      </div>
                     <div class="w-full ml-2">
                         <p class="text-white mb-2 pl-3 font-bold">Instansi</p>
@@ -87,13 +91,37 @@ export default {
                 phone:'',
                 instansi:''
             },
+            validating:{
+              isEmail:true,
+              isNumber:true
+            },
             message:'',
             success:false,
             hidden:true
         }
     },
     methods: {
-        
+      isNumeric(str) {
+  if (typeof str != "string") return false // we only process strings!  
+  return !isNaN(str) && // use type coercion to parse the _entirety_ of the string (`parseFloat` alone does not do this)...
+         !isNaN(parseFloat(str)) // ...and ensure strings of whitespace fail
+},
+       isNumber() {
+
+        if(!this.isNumeric(this.register.phone)) {
+          this.validating.isNumber = false
+        }else {
+          this.validating.isNumber = true
+        }
+       },
+        async isEmail() {
+          let vald =await  this.register.email.includes('@') ? true :false
+          if(!vald) {
+            this.validating.isEmail = false
+          } else {
+            this.validating.isEmail = true
+          }
+        },
         handleRegisterclick() {
         let baseURL = import.meta.env.VITE_API_URL
         let endpoint = import.meta.env.VITE_API_REGISTER
