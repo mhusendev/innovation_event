@@ -41,7 +41,7 @@ app.use(cookieParser());
 //   next();
 // });
 // app.use(cors())
- app.use(cors({ origin:['https://a7e0-118-96-87-76.ngrok-free.app','https://innovation052023.pages.dev','http://localhost:3001'], credentials: true,  preflightContinue: true, }))
+ app.use(cors({ origin:['https://rubikda-platform.vercel.app','https://innovation052023.pages.dev','http://localhost:3001'], credentials: true,  preflightContinue: true, }))
 // app.use(cors({ origin:true, credentials: true,  preflightContinue: true, }))
 app.use('/', indexRouter);
 app.use('/users', usersRouter);

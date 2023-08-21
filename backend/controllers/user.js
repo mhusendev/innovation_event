@@ -159,6 +159,7 @@ const sendMailVerify = async(req,res)=> {
     }
 }
 const registerUser = async (req,res) => {
+if(req.body.fullname !== '' || req.body.email !== '' || req.body.phone !== '' || req.body.instansi !== ''){
     try{
        
         const {fullname,email,password,phone,instansi} = await req.body;
@@ -195,6 +196,12 @@ const registerUser = async (req,res) => {
  
         })
     }
+} else {
+    res.status(400).send({
+        status: 'ERROR',
+        message: 'Registrasi Gagal',
+    })
+}
 }
 
 

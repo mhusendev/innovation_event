@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken')
 // secret key utuk salt token
 const SECRET_KEY = "Kmzway87@@";
 const authentication = async (req, res) => {
+   if(req.body.email === '' || req.body.password ==='') return   res.status(400).send({status:'ERROR',message:'Failed login', data: {}})
   try {
     const { email, password } = req.body;
      console.log(req.body)
