@@ -1,7 +1,16 @@
 <template>
    <div class="w-full h-screen overflow-auto bg-white">
     <Navbar/>
+   <div class="flex justify-between">
     <h1 class="ml-10 mt-5 font-bold md:text-2xl md:border-b-2 border-b pb-3 border-black w-fit">Pengajuan inovasi</h1>
+    <a :href="baseURL+'/pdf/sop.pdf'" target="_blank" class="mr-[5%] mt-[3%] btn text-white flex">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m6.75 12H9m1.5-12H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+</svg>
+
+      SOP Pengajuan Inovasi</a>
+   </div>
+   
     <div class="w-full px-10 py-10">
         <div class="w-full px-5 py-5 shadow-lg rounded-lg">
             <!-- form -->
@@ -101,6 +110,7 @@
     <!-- table for upload -->
     <div class="w-full px-5 py-5 shadow-lg rounded-lg">
          <p class="mb-5 mt-2 border-b w-fit border-black pb-3">Upload Dokumentasi</p>
+         <p class="mb-5 text-sm text-red-500">{{ file_eror }}</p>
          <p class="mb-5 text-sm">* Untuk Jenis File Proposal dan Surat adalah pdf , untuk vidio mkv/mp4, untuk gambar jpg/jpeg </p>
          <div class="w-[100%] grid grid-cols-1 md:grid-cols-3 gap-4">
             <input type="file" class="w-full" v-on:change="previewFiles" :multiple="false"/>
@@ -161,6 +171,7 @@ export default {
     components: {Navbar,QuillEditor},
     data() {
         return {
+          baseURL:import.meta.env.VITE_API_URL,
             file:'',
             filetemp:[],
             inovator: '',
@@ -197,6 +208,8 @@ export default {
             inovasi_covid:[],
             jenis_urusan:[],
             tema:[],
+            validasi_file:['proposal','surat','foto cover', 'foto dokumentasi'],
+            file_eror:'',
             validasi:{
               val1:false,
               val2:false,
@@ -212,11 +225,12 @@ export default {
             },
             keterangan:'',
             popalert:false,
-            messagealert:'Berhasil'
+            messagealert:'Berhasil',
+            arr_file:[]
         }
     },
     methods: {
-      validate () {
+      async validate () {
        this.validasi.val1 = this.nama_inovasi?false:true
        this.validasi.val2 = this.inovator?false:true
        this.validasi.val3 = this.nama_perangkat_daerah?false:true
@@ -234,13 +248,22 @@ export default {
        && this.validasi.val5 == false  && this.validasi.val6 == false
        && this.validasi.val7 == false  && this.validasi.val8 == false
        && this.validasi.val9 == false  && this.validasi.val10 == false  && this.validasi.val11 == false) {
-        return true
+        let FinalArray = [];
+        FinalArray = await this.validasi_file.filter (name => !this.arr_file.includes(name));
+        if(FinalArray.length <1) {
+          return true
+        } else {
+          this.file_eror = 'harap Upload berkas '+ JSON.stringify(FinalArray).replace(/[\[\]']+/g,'')
+        }
+
+     
        } else {
         return false
        }
 
       },
        async save(){
+        // console.log(this.filetemp)
         try{
          let datavalidasi = await this.validate()
          console.log(datavalidasi)
@@ -325,12 +348,16 @@ console.log(err)
        
         },
         async addFile(){
-         
+          console.log(this.selectedDocs)
            let data = {
             jenis_docs: this.selectedDocs,
             data: this.file
            }
            this.filetemp.push(data)
+           for(let i in this.filetemp){
+            this.arr_file.push(this.filetemp[i].jenis_docs)
+           }
+           console.log(this.arr_file)
            console.log(this.filetemp[0].data.name)
         },
         previewFiles(event) {

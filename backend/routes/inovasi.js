@@ -38,6 +38,7 @@ router.post('/jenis_urusan/d',jenisUrusan.destroy);
 router.post('/tema/d',temaInovasi.create);
 router.post('/acc_inovasi',middleware.authorization,inovasi.accInovasi)
 router.post('/reject_inovasi',middleware.authorization,inovasi.rejectInovasi)
+router.post('/evaluasi_inovasi',middleware.authorization,inovasi.evaluasiInovasi)
 // multer
 const multer = require('multer');
 const storageEngine = multer.diskStorage({

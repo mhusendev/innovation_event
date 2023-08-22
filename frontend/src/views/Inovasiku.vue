@@ -55,7 +55,7 @@
                 <th scope="col" class="px-6 py-3">jenis</th>
                 <th scope="col" class="px-6 py-3">inovator</th>
                 <th scope="col" class="px-6 py-3">inisiator</th>
-                <th scope="col" class="px-6 py-3">ACC</th>
+                <th scope="col" class="px-6 py-3">Informasi Keterangan</th>
                 <th scope="col" class="px-6 py-3">Action</th>
               </tr>
             </thead>
@@ -81,7 +81,7 @@
                   {{ inovasi.inisiator }}
                 </td>
                 <td class="px-6 py-4">
-                  {{ (inovasi.acc == 1)? 'Sudah Acc':'Belum Acc' }}
+                  {{ inovasi.acc  }}
                 </td>
                 <td class="px-6 py-4">
                     <div class="flex gap-2">

@@ -106,6 +106,36 @@ const rejectInovasi = async (req,res)=> {
       console.log(err)
     }
   }
+
+  const evaluasiInovasi = async (req,res)=> {
+
+    try{
+      let update = models.innovations.update({
+          acc: 'dalam evaluasi',
+          act_by:req.email
+     },
+      {
+          where: {
+              id:req.body.id
+          }
+      }
+     )
+  
+     if(update) {
+         res.status(200).send({
+          status: 'OK',
+          message:'Inovasi Berhasil di Update',
+         })
+     } else {
+      res.status(400).send({
+          status: 'ERROR',
+          message:'Inovasi gagal di Update',
+         })
+     }
+    }catch(err){
+      console.log(err)
+    }
+  }
   
 const create = async (req,res)=> {
 try {
@@ -192,4 +222,4 @@ const getByuser = async (req,res)=> {
       console.log(err)
     }
 }
-module.exports= {getNo_dokumentasi, create ,getAll, accInovasi,getAll_acc,rejectInovasi,getByuser}
+module.exports= {evaluasiInovasi,getNo_dokumentasi, create ,getAll, accInovasi,getAll_acc,rejectInovasi,getByuser}

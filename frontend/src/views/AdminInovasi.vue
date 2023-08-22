@@ -83,11 +83,14 @@
                 <td class="px-6 py-4">
                     <div class="flex gap-2">
                       <button class="btn" v-on:click="showDetail(inovasi)">detail</button>
+                      <button 
+                     
+                     class="btn bg-gray-700 text-white" v-on:click="evaluasiInovasi(inovasi.id)">Evaluasi</button>
                       <button
-                      :class="(inovasi.acc ==='sudah')?'hidden':''" 
+                     
                       class="btn btn-success text-white" v-on:click="accInovasi(inovasi.id)">acc</button>
                       <button 
-                      :class="(inovasi.acc ==='sudah' || inovasi.acc ==='rejected' )?'hidden':''"
+                     
                        class="btn bg-red-700 text-white" v-on:click="rejectInovasi(inovasi.id)">reject</button>
                     </div>
                 </td>
@@ -214,6 +217,37 @@ export default {
            this.warning = true
            this.background = 'bg-green-600 text-white '
           this.alertmessage = 'Berhasil Reject Pengajuan'
+           setTimeout(()=>{
+            this.warning = 'false'
+            this.alertmessage= ''
+            this.background=''
+           },1500)
+           this.getAll();
+            
+          
+          });
+    },
+    evaluasiInovasi(id) {
+      let baseURL = import.meta.env.VITE_API_URL;
+      let endpoint = import.meta.env.VITE_POST_EVALUASI_INOVASI;
+      let token = 'Bearer '+localStorage.getItem('token')
+        fetch(baseURL+endpoint, {
+          method: "POST",
+          credentials:'include',
+          headers: {
+			'Authorization':token,
+            'Bypass-Tunnel-Reminder': 'true',
+            Accept: "application/json, text/plain, */*",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({id:id}),
+        })
+          .then((res) => res.json())
+          .then((res) =>{
+           console.log(res)
+           this.warning = true
+           this.background = 'bg-green-600 text-white '
+          this.alertmessage = 'Berhasil Evaluasi Pengajuan'
            setTimeout(()=>{
             this.warning = 'false'
             this.alertmessage= ''

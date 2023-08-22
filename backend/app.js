@@ -18,7 +18,7 @@ var app = express();
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/files',serveIndex(__dirname+'/files'))
-
+app.use('/files/pdf',serveIndex(__dirname+'/files/pdf'))
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
