@@ -36,7 +36,7 @@ const getAll_acc =  async (req,res) => {
                 model:models.docs,
                 required:true
             }],
-            where: {acc:'sudah'},
+            where: {acc:'disetujui'},
             order: [
                 ['id', 'DESC'],
             ]
@@ -52,7 +52,7 @@ const accInovasi = async (req,res)=> {
 
   try{
     let update = models.innovations.update({
-        acc: 'sudah',
+        acc: 'disetujui',
         act_by:req.email
    },
     {
@@ -81,7 +81,7 @@ const rejectInovasi = async (req,res)=> {
 
     try{
       let update = models.innovations.update({
-          acc: 'rejected',
+          acc: 'tidak disetujui',
           act_by:req.email
      },
       {
