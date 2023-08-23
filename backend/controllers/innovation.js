@@ -159,7 +159,7 @@ try {
             surat,proposal,nama_perangkat_daerah,tahapan,
             inisiator,jenis,bentuk,inovasi_thdp_covid,
             jenis_urusan_inovasi,tema,tanggal,
-            no_dokumentasi,keterangan,acc:'belum',act_by:''
+            no_dokumentasi,keterangan,acc:'sedang di proses',act_by:''
            })
            if(data) {
             res.status(201).send({
