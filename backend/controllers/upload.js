@@ -43,7 +43,7 @@ const upload = async (req,res)=> {
             nama_perangkat_daerah,tahapan,
             inisiator,jenis,bentuk,inovasi_thdp_covid,
             jenis_urusan_inovasi,tema,tanggal,
-            no_dokumentasi:nodokumen,keterangan,acc:false,acc_by:''
+            no_dokumentasi:nodokumen,keterangan,acc:'sedang diproses',acc_by:''
            })
            if(data) {
             res.status(201).send({
