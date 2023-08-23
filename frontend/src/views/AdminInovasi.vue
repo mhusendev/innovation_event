@@ -88,10 +88,10 @@
                      class="btn bg-gray-700 text-white" v-on:click="evaluasiInovasi(inovasi.id)">Evaluasi</button>
                       <button
                      
-                      class="btn btn-success text-white" v-on:click="accInovasi(inovasi.id)">acc</button>
+                      class="btn btn-success text-white" v-on:click="accInovasi(inovasi.id)">Setujui</button>
                       <button 
                      
-                       class="btn bg-red-700 text-white" v-on:click="rejectInovasi(inovasi.id)">reject</button>
+                       class="btn bg-red-700 text-white" v-on:click="rejectInovasi(inovasi.id)">Tidak disetujui</button>
                     </div>
                 </td>
               </tr>
