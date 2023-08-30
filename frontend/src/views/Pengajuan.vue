@@ -545,6 +545,30 @@ console.log(err)
         console.log(this.selectedTahapan_inovasi)
     },
     created: function() {
+      let baseURL = import.meta.env.VITE_API_URL
+        let endpoint = import.meta.env.VITE_API_CEKLOGIN
+        let token = 'Bearer '+localStorage.getItem('token')
+        fetch(baseURL+endpoint, {
+          method: "GET",
+          credentials:'include',
+          headers: {
+			'Authorization':token, 
+            'Bypass-Tunnel-Reminder': 'true',
+            Accept: "application/json, text/plain, */*",
+            "Content-Type": "application/json",
+          },
+        })
+          .then((res) => res.json())
+          .then((res)=> {
+            if(res.status !== 200) {
+                this.$router.push( {name:'login'})
+            }
+            console.log(res.status)
+          })
+          .catch((err)=> {
+            this.$router.push( {name:'login'})
+          })
+        
         this.getTahapan()
         this.getinisiator()
         this.getjenisinovasi()
