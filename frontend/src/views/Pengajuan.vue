@@ -566,7 +566,7 @@ console.log(err)
             console.log(res.status)
           })
           .catch((err)=> {
-            this.$router.push( {name:'login'})
+            this.$router.push( {name:'userlogin'})
           })
         
         this.getTahapan()
